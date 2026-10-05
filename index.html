@@ -1,3722 +1,1254 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>
-Rocket Mission Challenge / ராக்கெட் பணி சவால்
-</title>
+<title>🚀 Space Mission Lab - Advanced Rocket Simulator</title>
 
 <style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Orbitron:wght@600;800;900&display=swap');
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
-
-    font-family:
-        Arial,
-        "Noto Sans Tamil",
-        sans-serif;
-
-    background:
-        radial-gradient(
-            circle at 80% 10%,
-            rgba(50,120,255,.15),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 10% 80%,
-            rgba(0,180,255,.08),
-            transparent 30%
-        ),
-        #070a16;
-
-    color: #e8edf7;
-
+    margin: 0;
+    font-family: 'Fredoka', Arial, sans-serif;
+    background: radial-gradient(circle at 50% 20%, #1a1c2e 0%, #0d0f18 60%, #05060a 100%);
+    color: white;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 button {
     font-family: inherit;
+    cursor: pointer;
 }
 
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-header {
-
-    height: 70px;
-
-    border-bottom:
-        1px solid #20283d;
-
+/* Header */
+.header {
+    padding: 15px 30px;
     display: flex;
-
-    align-items: center;
-
     justify-content: space-between;
-
-    padding: 0 30px;
-
-    background:
-        rgba(5,8,18,.95);
-
+    align-items: center;
+    background: rgba(13, 15, 24, 0.95);
+    border-bottom: 3px solid #38bdf8;
     position: sticky;
-
     top: 0;
-
     z-index: 50;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
 }
 
 .logo {
-
-    color: #69b8ff;
-
-    font-size: 19px;
-
-    font-weight: bold;
-
+    font-size: 24px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    color: #ff007f;
     letter-spacing: 1px;
 }
 
-.header-right {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 25px;
+.logo span {
+    color: #38bdf8;
 }
 
-.status {
-
-    color: #8e9bb0;
-
-    font-size: 12px;
+.header-status {
+    padding: 8px 18px;
+    border-radius: 30px;
+    background: #facc15;
+    color: #0f172a;
+    font-size: 14px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    border: 2px solid #ffffff;
 }
-
-.status span {
-
-    color: #ffb84d;
-
-    font-weight: bold;
-}
-
-
-/* =========================================================
-   MAIN
-========================================================= */
 
 .container {
-
-    max-width: 1450px;
-
+    max-width: 1400px;
     margin: auto;
-
-    padding: 25px;
-}
-
-
-/* =========================================================
-   MISSION BANNER
-========================================================= */
-
-.mission-banner {
-
-    border:
-        1px solid #28344e;
-
-    background:
-        linear-gradient(
-            100deg,
-            rgba(13,18,34,.98),
-            rgba(9,14,27,.95)
-        );
-
-    border-radius: 15px;
-
-    padding: 25px;
-
-    margin-bottom: 25px;
-}
-
-.mission-title {
-
-    color: #69b8ff;
-
-    letter-spacing: 1px;
-
-    font-size: 24px;
-
-    margin-bottom: 10px;
-}
-
-.mission-description {
-
-    color: #9ca9bd;
-
-    line-height: 1.7;
-
-    font-size: 14px;
-
-    max-width: 1000px;
-}
-
-.mission-target {
-
-    display: flex;
-
-    gap: 12px;
-
-    flex-wrap: wrap;
-
-    margin-top: 18px;
-}
-
-.target {
-
-    border:
-        1px solid #293650;
-
-    background:
-        #0c1120;
-
-    padding:
-        10px 15px;
-
-    border-radius: 8px;
-
-    color: #8d9ab0;
-
-    font-size: 13px;
-}
-
-.target b {
-
-    color: white;
-
-    margin-left: 5px;
-}
-
-
-/* =========================================================
-   MAIN GRID
-========================================================= */
-
-.main {
-
-    display: grid;
-
-    grid-template-columns:
-        1.35fr .9fr;
-
-    gap: 25px;
-}
-
-.panel {
-
-    background:
-        rgba(10,15,28,.95);
-
-    border:
-        1px solid #26324c;
-
-    border-radius: 15px;
-
-    padding: 22px;
-}
-
-
-/* =========================================================
-   SECTIONS
-========================================================= */
-
-.section {
-
-    margin-bottom: 28px;
-}
-
-.section-title {
-
-    color: #67b8ff;
-
-    font-size: 17px;
-
-    letter-spacing: 1px;
-
-    margin-bottom: 5px;
-
-    font-weight: bold;
-}
-
-.section-sub {
-
-    color: #7e8ba1;
-
-    font-size: 12px;
-
-    margin-bottom: 13px;
-
-    line-height: 1.6;
-}
-
-
-/* =========================================================
-   OPTION CARDS
-========================================================= */
-
-.cards {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 12px;
-}
-
-.cards.two {
-
-    grid-template-columns:
-        repeat(2, 1fr);
-}
-
-.option {
-
-    min-height: 105px;
-
-    border:
-        1px solid #293650;
-
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #12182a,
-            #0d1220
-        );
-
-    padding: 15px;
-
-    text-align: center;
-
-    cursor: pointer;
-
-    transition:
-        .2s ease;
-}
-
-.option:hover {
-
-    border-color: #4caeff;
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 8px 25px
-        rgba(0,0,0,.25);
-}
-
-.option.selected {
-
-    border-color:
-        #54b9ff;
-
-    background:
-        linear-gradient(
-            145deg,
-            #14263d,
-            #0e182a
-        );
-
-    box-shadow:
-        0 0 20px
-        rgba(67,174,255,.18);
-}
-
-.option h3 {
-
-    font-size: 14px;
-
-    letter-spacing: 1px;
-
-    margin-bottom: 8px;
-
-    color: #eef5ff;
-}
-
-.option p {
-
-    color: #8491a7;
-
-    font-size: 12px;
-
-    line-height: 1.6;
-}
-
-.option .value {
-
-    color: #cbd6e7;
-
-    font-size: 13px;
-
-    margin-top: 7px;
-
-    font-weight: bold;
-}
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-.dashboard {
-
-    position: sticky;
-
-    top: 90px;
-}
-
-.dashboard h2 {
-
-    color: #68b8ff;
-
-    letter-spacing: 2px;
-
-    font-size: 21px;
-
-    margin-bottom: 5px;
-}
-
-.dashboard-sub {
-
-    color: #8491a7;
-
-    font-size: 12px;
-
-    margin-bottom: 18px;
-}
-
-.metric {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 15px;
-
-    padding: 13px 0;
-
-    border-bottom:
-        1px solid #1c2538;
-}
-
-.metric .name {
-
-    color: #8996ab;
-
-    font-size: 12px;
-
-    line-height: 1.5;
-}
-
-.metric .value {
-
-    color: #e9eff9;
-
-    font-weight: bold;
-
-    font-size: 13px;
-
-    text-align: right;
-}
-
-
-/* =========================================================
-   STATUS COLORS
-========================================================= */
-
-.good {
-
-    color:
-        #4ce39a !important;
-}
-
-.bad {
-
-    color:
-        #ff6678 !important;
-}
-
-.warning {
-
-    color:
-        #ffc04d !important;
-}
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-.progress-section {
-
-    margin-top: 20px;
-}
-
-.progress-label {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    color: #8c99ad;
-
-    font-size: 11px;
-
-    margin-bottom: 6px;
-}
-
-.progress {
-
-    height: 7px;
-
-    background:
-        #1b2435;
-
-    border-radius:
-        20px;
-
-    overflow: hidden;
-
-    margin-bottom: 14px;
-}
-
-.progress-bar {
-
-    height: 100%;
-
-    width: 0%;
-
-    background:
-        #53b7ff;
-
-    transition:
-        width .4s;
-}
-
-
-/* =========================================================
-   SCORE
-========================================================= */
-
-.score-box {
-
-    text-align: center;
-
-    border:
-        1px solid #2b3a57;
-
-    background:
-        #0d1424;
-
-    border-radius: 12px;
-
-    padding: 18px;
-
-    margin-top: 20px;
-}
-
-.score {
-
-    font-size: 40px;
-
-    font-weight: bold;
-
-    color: #68b8ff;
-}
-
-.score-label {
-
-    color: #8290a6;
-
-    font-size: 10px;
-
-    letter-spacing: 1px;
-
-    margin-top: 4px;
-}
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.launch-btn {
-
-    width: 100%;
-
-    border: none;
-
-    border-radius: 10px;
-
-    margin-top: 18px;
-
-    padding: 16px;
-
-    font-size: 15px;
-
-    font-weight: bold;
-
-    letter-spacing: 1px;
-
-    color: #06101b;
-
-    background:
-        linear-gradient(
-            90deg,
-            #4db5ff,
-            #73d0ff
-        );
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.launch-btn:hover {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 0 25px
-        rgba(70,185,255,.35);
-}
-
-.launch-btn:disabled {
-
-    opacity: .35;
-
-    cursor:
-        not-allowed;
-
-    transform: none;
-
-    box-shadow: none;
-}
-
-.reset-btn {
-
-    width: 100%;
-
-    padding: 11px;
-
-    margin-top: 9px;
-
-    border-radius: 9px;
-
-    background:
-        transparent;
-
-    border:
-        1px solid #293650;
-
-    color: #9ba8bb;
-
-    cursor: pointer;
-}
-
-.reset-btn:hover {
-
-    border-color:
-        #4baeff;
-
-    color: white;
-}
-
-
-/* =========================================================
-   RESULT MODAL
-========================================================= */
-
-.result {
-
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(2,5,12,.95);
-
-    z-index: 100;
-
-    align-items: center;
-
-    justify-content: center;
-
     padding: 20px;
 }
 
-.result-box {
+.screen {
+    display: none;
+}
 
-    max-width: 700px;
+.screen.active {
+    display: block;
+}
 
-    width: 100%;
-
-    border:
-        1px solid #31405d;
-
-    border-radius: 18px;
-
-    background:
-        #0b1020;
-
-    padding: 35px;
-
+/* ---------------- MISSION SCREEN ---------------- */
+.mission-card {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
     text-align: center;
-
-    box-shadow:
-        0 0 80px
-        rgba(0,0,0,.7);
+    background: rgba(22, 27, 46, 0.95);
+    border: 3px solid #38bdf8;
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(56, 189, 248, 0.2);
 }
 
-.result-icon {
-
-    font-size: 60px;
-
-    margin-bottom: 10px;
+.mission-icon {
+    font-size: 80px;
+    animation: bounce 2s infinite alternate;
 }
 
-.result h2 {
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-15px); }
+}
 
-    font-size: 28px;
+h1 {
+    margin: 10px 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    color: #facc15;
+    text-shadow: 2px 2px 0 #e11d48;
+}
 
+.subtitle {
+    color: #cbd5e1;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.mission-data {
+    margin: 30px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.data-box {
+    padding: 18px 10px;
+    border-radius: 18px;
+    background: #0d0f18;
+    border: 2px dashed #38bdf8;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.data-box strong {
+    display: block;
+    font-size: 20px;
+    color: #4ade80;
+    margin-top: 5px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.btn {
+    border: 0;
+    border-radius: 20px;
+    padding: 14px 30px;
+    font-weight: 700;
+    font-size: 17px;
+    transition: .2s;
+    box-shadow: 0 6px 0px rgba(0,0,0,0.4);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 0px rgba(0,0,0,0.4);
+}
+
+.btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0px rgba(0,0,0,0.4);
+}
+
+.btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff007f, #7928ca);
+    color: white;
+    border: 2px solid #ffffff;
+}
+
+.btn-secondary {
+    background: #334155;
+    color: white;
+    border: 2px solid #94a3b8;
+}
+
+/* ---------------- CONFIG SCREEN ---------------- */
+.section-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.section-title h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 30px;
+    color: #facc15;
+    margin-bottom: 5px;
+}
+
+.config-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.config-card {
+    background: #161b2e;
+    border: 3px solid #a855f7;
+    padding: 20px;
+    border-radius: 22px;
+}
+
+.config-card label {
+    display: block;
+    font-weight: bold;
+    font-size: 15px;
+    color: #38bdf8;
     margin-bottom: 12px;
 }
 
-.result.success h2 {
-
-    color:
-        #4ce49b;
+select,
+input[type="range"] {
+    width: 100%;
 }
 
-.result.failure h2 {
-
-    color:
-        #ff6478;
+select {
+    padding: 12px;
+    border-radius: 12px;
+    background: #0d0f18;
+    color: #facc15;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #a855f7;
 }
 
-.result p {
-
-    color:
-        #9ca9bd;
-
-    line-height: 1.8;
-
-    margin: 15px 0;
-}
-
-.failure-reasons {
-
-    text-align: left;
-
-    background:
-        #111728;
-
-    border:
-        1px solid #293650;
-
-    border-radius: 10px;
-
-    padding: 15px;
-
-    color:
-        #b5c0d2;
-
-    font-size: 12px;
-
-    line-height: 1.8;
-}
-
-.failure-reasons div {
-
+.range-value {
+    color: #63d8ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
     margin-bottom: 8px;
 }
 
-.result-stats {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap: 10px;
-
-    margin: 20px 0;
+.config-summary {
+    max-width: 1100px;
+    margin: 25px auto;
+    padding: 18px;
+    border-radius: 18px;
+    background: #081024;
+    border: 2px solid #202d50;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    font-size: 14px;
 }
 
-.result-stat {
-
-    background:
-        #10172a;
-
-    padding: 13px;
-
-    border-radius: 9px;
-}
-
-.result-stat small {
-
+.config-summary strong {
     display: block;
-
-    color:
-        #77859c;
-
-    margin-bottom: 5px;
-
-    font-size: 10px;
+    color: #63d8ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    margin-top: 4px;
 }
 
-.result-stat b {
-
-    color:
-        #e8eef8;
+/* ---------------- BUILD SCREEN ---------------- */
+.build-layout {
+    display: grid;
+    grid-template-columns: 310px 1fr 310px;
+    gap: 20px;
 }
 
-.result button {
+.panel {
+    background: rgba(22, 27, 46, 0.95);
+    border: 3px solid #38bdf8;
+    border-radius: 25px;
+    padding: 20px;
+}
 
-    padding:
-        12px 22px;
+.panel h3 {
+    margin-top: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    color: #facc15;
+    text-align: center;
+}
 
-    border: none;
+/* Shuffled Palette */
+.parts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
 
-    border-radius: 9px;
+.part-card {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 16px;
+    background: #0d0f18;
+    border: 2px solid #38bdf8;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 0 #0284c7;
+}
 
-    background:
-        #52b5ff;
+.part-card:hover {
+    transform: scale(1.02);
+    border-color: #facc15;
+}
 
-    color:
-        #07101d;
+.part-card.used {
+    opacity: 0.25;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+}
 
+.part-preview-svg {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+}
+
+.part-info {
+    text-align: left;
+}
+
+.part-title {
     font-weight: bold;
-
-    cursor: pointer;
-
-    margin: 5px;
+    font-size: 14px;
+    color: #ffffff;
 }
 
+.part-desc {
+    font-size: 11px;
+    color: #94a3b8;
+}
 
-/* =========================================================
-   LAUNCH ANIMATION
-========================================================= */
+/* Assembly Bay */
+.assembly {
+    min-height: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #1a233a 0%, #0b101d 100%);
+    border: 3px dashed #4ade80;
+    border-radius: 25px;
+    position: relative;
+}
 
-.launch-animation {
+.rocket-assembly-stack {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    display: none;
+.slot {
+    width: 100%;
+    margin-bottom: 2px;
+    border: 2px dashed #64748b;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+    color: #94a3b8;
+    transition: 0.2s;
+    position: relative;
+    text-align: center;
+}
 
-    position: fixed;
+.slot.drag-over {
+    border-color: #facc15;
+    background: rgba(250, 204, 21, 0.2);
+    transform: scale(1.02);
+}
 
-    inset: 0;
+.slot-nose { height: 75px; border-radius: 75px 75px 8px 8px; }
+.slot-third { height: 60px; }
+.slot-second { height: 65px; }
+.slot-first { height: 80px; }
+.slot-fuel { height: 60px; }
+.slot-guidance { height: 50px; }
+.slot-structure { height: 50px; }
+.slot-engine { height: 55px; }
+.slot-nozzle { height: 50px; border-radius: 8px 8px 18px 18px; }
 
-    background:
-        #02040a;
+.placed-part-svg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-    z-index: 200;
+.remove-btn {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ff0055;
+    border: 2px solid #ffffff;
+    color: white;
+    width: 22px; 
+    height: 22px;
+    border-radius: 50%;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
 
+@keyframes popIn {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Telemetry Dashboard */
+.metric {
+    margin-bottom: 16px;
+}
+
+.metric-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #cbd5e1;
+}
+
+.metric-value {
+    color: #63d8ff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+}
+
+.bar {
+    height: 10px;
+    background: #0d0f18;
+    border-radius: 12px;
+    border: 1px solid #475569;
     overflow: hidden;
 }
 
-.launch-animation.active {
-
-    display: block;
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #38bdf8, #4ade80);
+    transition: width 0.4s ease;
 }
 
-.rocket {
-
-    position: absolute;
-
-    left: 50%;
-
-    bottom: -150px;
-
-    transform:
-        translateX(-50%);
-
-    font-size: 75px;
-
+.status-box {
+    padding: 14px;
+    border-radius: 16px;
+    background: #0d0f18;
+    border: 2px solid #475569;
     text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.status-box.warn {
+    border-color: #ef476f;
+    color: #ff85a1;
+}
+
+.status-box.good {
+    border-color: #4ade80;
+    color: #4ade80;
+}
+
+.build-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* ---------------- LAUNCH SCREEN ---------------- */
+.launch-stage {
+    text-align: center;
+    padding: 20px;
+}
+
+.launch-pad {
+    height: 520px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to top, #020617 0%, #0f172a 70%, #1e1b4b 100%);
+    border-radius: 25px;
+    border: 3px solid #38bdf8;
+}
+
+.launch-rocket-container {
+    width: 140px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: bottom 4s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.launch-rocket-container.fly {
+    bottom: 700px;
 }
 
 .rocket-flame {
-
-    font-size: 50px;
-
-    margin-top: -10px;
+    width: 36px;
+    height: 80px;
+    background: linear-gradient(to bottom, #ffffff, #ffbd00, #ff0055, transparent);
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 50% 80%, 0% 100%);
+    animation: flame 0.1s infinite alternate;
+    display: none;
 }
 
-.launch-animation.active .rocket {
-
-    animation:
-        rocketLaunch 3s
-        ease-in forwards;
+.rocket-flame.active {
+    display: block;
 }
 
-@keyframes rocketLaunch {
-
-    0% {
-
-        bottom: -150px;
-
-    }
-
-    100% {
-
-        bottom: 120%;
-
-    }
-
+@keyframes flame {
+    from { transform: scaleY(0.85); }
+    to { transform: scaleY(1.15); }
 }
 
-.launch-text {
+.count-val {
+    font-size: 70px;
+    font-family: 'Orbitron', sans-serif;
+    color: #facc15;
+    font-weight: bold;
+    text-shadow: 3px 3px 0 #ef476f;
+}
 
-    position: absolute;
-
-    top: 45%;
-
-    width: 100%;
-
+/* Result Card */
+.result-card {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 35px;
     text-align: center;
-
-    color: #68b8ff;
-
-    font-size: 23px;
-
-    letter-spacing: 3px;
+    background: #161b2e;
+    border: 4px solid #4ade80;
+    border-radius: 30px;
 }
 
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media(max-width: 950px) {
-
-    .main {
-
-        grid-template-columns:
-            1fr;
+@media(max-width: 1050px) {
+    .build-layout {
+        grid-template-columns: 1fr;
     }
-
-    .dashboard {
-
-        position: relative;
-
-        top: 0;
+    .config-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
-
 }
-
-@media(max-width: 650px) {
-
-    header {
-
-        height: auto;
-
-        min-height: 70px;
-
-        padding:
-            12px 15px;
-
-        gap: 10px;
-    }
-
-    .logo {
-
-        font-size: 14px;
-    }
-
-    .header-right {
-
-        gap: 5px;
-    }
-
-    .status {
-
-        display: none;
-    }
-
-    .container {
-
-        padding: 12px;
-    }
-
-    .cards,
-    .cards.two {
-
-        grid-template-columns:
-            1fr;
-    }
-
-    .mission-target {
-
-        flex-direction:
-            column;
-    }
-
-    .result-box {
-
-        padding:
-            25px 18px;
-    }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
-<header>
-
-    <div class="logo">
-
-        🚀 SPACE MISSION LAB
-        /
-        விண்வெளி பணி ஆய்வகம்
-
-    </div>
-
-    <div class="header-right">
-
-        <div class="status">
-
-            MISSION / பணி :
-
-            <span id="headerStatus">
-
-                INCOMPLETE /
-                முழுமையடையவில்லை
-
-            </span>
-
-        </div>
-
-        <div class="status">
-
-            SCORE / மதிப்பெண் :
-
-            <span id="headerScore">
-
-                0
-
-            </span>
-
-        </div>
-
-    </div>
-
+<header class="header">
+    <div class="logo">🚀 <span>SPACE MISSION LAB</span></div>
+    <div class="header-status">MISSION 01</div>
 </header>
-
-
 
 <div class="container">
 
+    <!-- ================= MISSION SCREEN ================= -->
+    <section id="missionScreen" class="screen active">
+        <div class="mission-card">
+            <div class="mission-icon">🚀</div>
+            <h1>ORBITAL LAUNCH MISSION<br><span style="font-size:20px; color:#38bdf8">விண்வெளிப் பயணம்</span></h1>
+            <p class="subtitle">
+                Build a rocket, configure its mass/propulsion, assemble its stages, and launch it successfully into orbit.
+            </p>
+            
+            <div class="mission-data">
+                <div class="data-box">
+                    PAYLOAD / சுமை
+                    <strong>500 kg</strong>
+                </div>
+                <div class="data-box">
+                    TARGET / இலக்கு
+                    <strong>LEO ORBIT</strong>
+                </div>
+                <div class="data-box">
+                    REQ Δv / தேவையான Δv
+                    <strong>5.50 km/s</strong>
+                </div>
+                <div class="data-box">
+                    MAX MASS / அதிகபட்ச எடை
+                    <strong>70,000 kg</strong>
+                </div>
+            </div>
 
-<!-- =========================================================
-     MISSION BANNER
-========================================================= -->
-
-<div class="mission-banner">
-
-    <h1 class="mission-title">
-
-        MISSION 01 — ORBITAL DELIVERY
-        /
-        பணி 01 — சுற்றுப்பாதை செலுத்துதல்
-
-    </h1>
-
-    <p class="mission-description">
-
-        Design a launch vehicle capable of completing
-        the assigned mission.
-        Select the correct combination of payload,
-        fuel, engine, guidance and structure.
-        <br><br>
-
-        கொடுக்கப்பட்ட விண்வெளிப் பணியை வெற்றிகரமாக
-        முடிக்கக்கூடிய ராக்கெட்டை வடிவமைக்கவும்.
-        சுமை, எரிபொருள், இயந்திரம், வழிகாட்டி மற்றும்
-        கட்டமைப்பின் சரியான சேர்க்கையை தேர்வு செய்யவும்.
-
-    </p>
+            <button class="btn btn-primary" onclick="showConfig()">
+                START MISSION / பணியைத் தொடங்கு 🚀
+            </button>
+        </div>
+    </section>
 
 
-    <div class="mission-target">
+    <!-- ================= CONFIG SCREEN ================= -->
+    <section id="configScreen" class="screen">
+        <div class="section-title">
+            <h2>ROCKET CONFIGURATION / ராக்கெட் அமைப்பு</h2>
+            <p style="font-size:16px; color:#94a3b8">Decide your rocket configuration parameters before building.</p>
+        </div>
 
-        <div class="target">
+        <div class="config-grid">
 
-            TARGET PAYLOAD / இலக்கு சுமை :
+            <div class="config-card">
+                <label>PAYLOAD / சுமை</label>
+                <div class="range-value">
+                    <span id="payloadValue">500</span> kg
+                </div>
+                <input
+                    type="range"
+                    id="payload"
+                    min="100"
+                    max="1000"
+                    step="100"
+                    value="500"
+                    oninput="updateConfig()">
+            </div>
 
-            <b>500 kg</b>
+            <div class="config-card">
+                <label>STAGES / நிலைகள்</label>
+                <select id="stages" onchange="updateConfig()">
+                    <option value="1">1 STAGE / 1 நிலை</option>
+                    <option value="2">2 STAGES / 2 நிலைகள்</option>
+                    <option value="3" selected>3 STAGES / 3 நிலைகள்</option>
+                </select>
+            </div>
+
+            <div class="config-card">
+                <label>FUEL CAPACITY / எரிபொருள் கொள்ளளவு</label>
+                <select id="fuel" onchange="updateConfig()">
+                    <option value="15000">15,000 kg</option>
+                    <option value="30000">30,000 kg</option>
+                    <option value="50000" selected>50,000 kg</option>
+                </select>
+            </div>
+
+            <div class="config-card">
+                <label>ENGINE / இயந்திரம்</label>
+                <select id="engine" onchange="updateConfig()">
+                    <option value="A">ENGINE A — 600 kN</option>
+                    <option value="B" selected>ENGINE B — 900 kN</option>
+                    <option value="C">ENGINE C — 1200 kN</option>
+                </select>
+            </div>
+
+            <div class="config-card">
+                <label>GUIDANCE / வழிகாட்டி</label>
+                <select id="guidance" onchange="updateConfig()">
+                    <option value="standard">STANDARD / நிலையான</option>
+                    <option value="advanced" selected>ADVANCED / மேம்பட்ட</option>
+                </select>
+            </div>
+
+            <div class="config-card">
+                <label>STRUCTURE / கட்டமைப்பு</label>
+                <select id="structure" onchange="updateConfig()">
+                    <option value="light">LIGHTWEIGHT / இலகுரக</option>
+                    <option value="standard" selected>STANDARD / நிலையான</option>
+                    <option value="heavy">HEAVY / கனமான</option>
+                </select>
+            </div>
 
         </div>
 
-
-        <div class="target">
-
-            TARGET Δv / இலக்கு Δv :
-
-            <b>5.50 km/s</b>
-
+        <div class="config-summary">
+            <div>PAYLOAD / சுமை <strong id="sumPayload">500 kg</strong></div>
+            <div>FUEL / எரிபொருள் <strong id="sumFuel">50,000 kg</strong></div>
+            <div>STAGES / நிலைகள் <strong id="sumStages">3</strong></div>
+            <div>ENGINE / இயந்திரம் <strong id="sumEngine">B</strong></div>
         </div>
 
+        <div style="text-align:center; margin-top:30px;">
+            <button class="btn btn-secondary" onclick="showMission()">← BACK / பின்செல்</button>
+            <button class="btn btn-primary" onclick="startBuild()">BUILD ROCKET / ராக்கெட்டை உருவாக்கு 🚀</button>
+        </div>
+    </section>
 
-        <div class="target">
 
-            MINIMUM T/W / குறைந்தபட்ச T/W :
-
-            <b>1.20</b>
-
+    <!-- ================= BUILD SCREEN ================= -->
+    <section id="buildScreen" class="screen">
+        <div class="section-title">
+            <h2>BUILD YOUR ROCKET / உங்கள் ராக்கெட்டை உருவாக்குங்கள்</h2>
+            <p style="font-size:16px; color:#94a3b8">Drag each part into its proper structural position.</p>
         </div>
 
-    </div>
+        <div class="build-layout">
+            
+            <!-- SHUFFLED PARTS PALETTE -->
+            <div class="panel">
+                <h3>🧩 PARTS PALETTE</h3>
+                <div class="parts-container" id="partsContainer">
+                    <!-- Dynamic Shuffled Parts -->
+                </div>
+            </div>
+
+            <!-- SIMULATION ASSEMBLY BAY -->
+            <div class="panel assembly">
+                <div class="rocket-assembly-stack" id="rocketAssemblyStack">
+                    <div class="slot slot-nose" data-slot="nose">🔺 NOSE CONE<br>முனை கூம்பு</div>
+                    <div class="slot slot-third" data-slot="third">🟡 THIRD STAGE<br>மூன்றாம் நிலை</div>
+                    <div class="slot slot-second" data-slot="second">🟢 SECOND STAGE<br>இரண்டாம் நிலை</div>
+                    <div class="slot slot-first" data-slot="first">🔵 FIRST STAGE<br>முதல் நிலை</div>
+                    <div class="slot slot-fuel" data-slot="fuel">🛢️ FUEL TANK<br>எரிபொருள் தொட்டி</div>
+                    <div class="slot slot-guidance" data-slot="guidance">🧭 GUIDANCE<br>வழிகாட்டி</div>
+                    <div class="slot slot-structure" data-slot="structure">⚙️ STRUCTURE<br>கட்டமைப்பு</div>
+                    <div class="slot slot-engine" data-slot="engine">🔥 ENGINE<br>இயந்திரம்</div>
+                    <div class="slot slot-nozzle" data-slot="nozzle">🔻 NOZZLE<br>முனை</div>
+                </div>
+            </div>
+
+            <!-- TELEMETRY / STATUS -->
+            <div class="panel">
+                <h3>📡 TELEMETRY / தொலைஅளவியல்</h3>
+                
+                <div class="metric">
+                    <div class="metric-head">
+                        <span>MASS / எடை</span>
+                        <span class="metric-value" id="massMetric">0 kg</span>
+                    </div>
+                    <div class="bar"><div class="bar-fill" id="massBar"></div></div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-head">
+                        <span>THRUST / உந்துவிசை</span>
+                        <span class="metric-value" id="thrustMetric">0 kN</span>
+                    </div>
+                    <div class="bar"><div class="bar-fill" id="thrustBar"></div></div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-head">
+                        <span>T/W RATIO / உந்துவிசை-எடை</span>
+                        <span class="metric-value" id="twMetric">0.00</span>
+                    </div>
+                    <div class="bar"><div class="bar-fill" id="twBar"></div></div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-head">
+                        <span>Δv / வேக மாற்றம்</span>
+                        <span class="metric-value" id="dvMetric">0.00 km/s</span>
+                    </div>
+                    <div class="bar"><div class="bar-fill" id="dvBar"></div></div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-head">
+                        <span>STABILITY / நிலைத்தன்மை</span>
+                        <span class="metric-value" id="stabilityMetric">0%</span>
+                    </div>
+                    <div class="bar"><div class="bar-fill" id="stabilityBar"></div></div>
+                </div>
+
+                <div class="status-box" id="missionFit">
+                    <b>MISSION FIT / பணி பொருத்தம்</b><br>
+                    Start assembling...
+                </div>
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="build-actions">
+                <button class="btn btn-secondary" onclick="resetBuild()">RESET / மீட்டமை</button>
+                <button class="btn btn-primary" id="testButton" onclick="testRocket()" disabled>TEST ROCKET / சோதிக்கவும் 🚀</button>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ================= LAUNCH SCREEN ================= -->
+    <section id="launchScreen" class="screen">
+        <div class="launch-stage">
+            <h2 style="font-size:32px; font-family:'Orbitron', sans-serif; color:#facc15;" id="launchStatus">SYSTEM CHECK...</h2>
+            <div class="count-val" id="countNumber">3</div>
+
+            <div class="launch-pad">
+                <div class="launch-rocket-container" id="launchRocket">
+                    <div id="fullRocketVisual"></div>
+                    <div class="rocket-flame" id="launchFlame"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= RESULT SCREEN ================= -->
+    <section id="resultScreen" class="screen">
+        <div class="result-card">
+            <div style="font-size:80px" id="resultIcon">🎉</div>
+            <h1 style="color:#4ade80" id="resultTitle">MISSION RESULT</h1>
+            <p style="font-size:18px; color:#cbd5e1;" id="resultText"></p>
+            <div id="failureList" style="text-align:left; color:#ff85a1; margin:20px 0;"></div>
+            <button class="btn btn-primary" onclick="restartMission()">TRY AGAIN / மீண்டும் முயற்சிக்கவும் 🔄</button>
+        </div>
+    </section>
 
 </div>
-
-
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
-
-<div class="main">
-
-
-<!-- =========================================================
-     LEFT PANEL
-========================================================= -->
-
-<div class="panel">
-
-
-<!-- PAYLOAD -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        PAYLOAD / சுமை
-
-    </div>
-
-    <div class="section-sub">
-
-        Select the mission payload /
-        பணிக்கான சுமையை தேர்வு செய்யவும்
-
-    </div>
-
-
-    <div class="cards">
-
-
-        <div
-            class="option"
-            data-type="payload"
-            data-value="250">
-
-            <h3>
-
-                LIGHT / இலகு
-
-            </h3>
-
-            <p>
-
-                Small mission
-                /
-                சிறிய பணி
-
-            </p>
-
-            <div class="value">
-
-                250 kg
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="payload"
-            data-value="500">
-
-            <h3>
-
-                STANDARD / நிலையான
-
-            </h3>
-
-            <p>
-
-                Target mission
-                /
-                இலக்கு பணி
-
-            </p>
-
-            <div class="value">
-
-                500 kg
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="payload"
-            data-value="750">
-
-            <h3>
-
-                HEAVY / அதிக சுமை
-
-            </h3>
-
-            <p>
-
-                Heavy mission
-                /
-                அதிக சுமை பணி
-
-            </p>
-
-            <div class="value">
-
-                750 kg
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- ENGINE -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        ENGINE / இயந்திரம்
-
-    </div>
-
-    <div class="section-sub">
-
-        Select propulsion system /
-        உந்துவிசை அமைப்பை தேர்வு செய்யவும்
-
-    </div>
-
-
-    <div class="cards">
-
-
-        <div
-            class="option"
-            data-type="engine"
-            data-thrust="600"
-            data-isp="300"
-            data-engine-mass="4000">
-
-            <h3>
-
-                ENGINE A
-
-            </h3>
-
-            <p>
-
-                Standard engine
-                /
-                நிலையான இயந்திரம்
-
-            </p>
-
-            <div class="value">
-
-                600 kN · 300 s
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="engine"
-            data-thrust="900"
-            data-isp="330"
-            data-engine-mass="5500">
-
-            <h3>
-
-                ENGINE B
-
-            </h3>
-
-            <p>
-
-                High performance
-                /
-                உயர் செயல்திறன்
-
-            </p>
-
-            <div class="value">
-
-                900 kN · 330 s
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="engine"
-            data-thrust="1200"
-            data-isp="350"
-            data-engine-mass="8000">
-
-            <h3>
-
-                ENGINE C
-
-            </h3>
-
-            <p>
-
-                Heavy lift
-                /
-                அதிக சுமை
-
-            </p>
-
-            <div class="value">
-
-                1200 kN · 350 s
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- FUEL -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        FUEL CAPACITY / எரிபொருள் கொள்ளளவு
-
-    </div>
-
-    <div class="section-sub">
-
-        Choose propellant capacity /
-        எரிபொருள் அளவை தேர்வு செய்யவும்
-
-    </div>
-
-
-    <div class="cards">
-
-
-        <div
-            class="option"
-            data-type="fuel"
-            data-fuel="15000">
-
-            <h3>
-
-                LOW / குறைவு
-
-            </h3>
-
-            <p>
-
-                Low capacity
-                /
-                குறைந்த கொள்ளளவு
-
-            </p>
-
-            <div class="value">
-
-                15,000 kg
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="fuel"
-            data-fuel="30000">
-
-            <h3>
-
-                MEDIUM / நடுத்தரம்
-
-            </h3>
-
-            <p>
-
-                Medium capacity
-                /
-                நடுத்தர கொள்ளளவு
-
-            </p>
-
-            <div class="value">
-
-                30,000 kg
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="fuel"
-            data-fuel="50000">
-
-            <h3>
-
-                HIGH / அதிகம்
-
-            </h3>
-
-            <p>
-
-                High capacity
-                /
-                அதிக கொள்ளளவு
-
-            </p>
-
-            <div class="value">
-
-                50,000 kg
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- GUIDANCE -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        GUIDANCE SYSTEM / வழிகாட்டி அமைப்பு
-
-    </div>
-
-    <div class="section-sub">
-
-        Select navigation and control capability
-        /
-        வழிசெலுத்தல் மற்றும் கட்டுப்பாட்டு அமைப்பை தேர்வு செய்யவும்
-
-    </div>
-
-
-    <div class="cards two">
-
-
-        <div
-            class="option"
-            data-type="guidance"
-            data-guidance="standard"
-            data-guidance-mass="150">
-
-            <h3>
-
-                STANDARD / நிலையான
-
-            </h3>
-
-            <p>
-
-                Basic navigation
-                /
-                அடிப்படை வழிசெலுத்தல்
-
-            </p>
-
-            <div class="value">
-
-                150 kg
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="guidance"
-            data-guidance="advanced"
-            data-guidance-mass="300">
-
-            <h3>
-
-                ADVANCED / மேம்பட்ட
-
-            </h3>
-
-            <p>
-
-                Precision navigation
-                /
-                துல்லியமான வழிசெலுத்தல்
-
-            </p>
-
-            <div class="value">
-
-                300 kg
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- STRUCTURE -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        STRUCTURE / கட்டமைப்பு
-
-    </div>
-
-    <div class="section-sub">
-
-        Choose structural configuration
-        /
-        ராக்கெட் கட்டமைப்பை தேர்வு செய்யவும்
-
-    </div>
-
-
-    <div class="cards">
-
-
-        <div
-            class="option"
-            data-type="structure"
-            data-structure="light"
-            data-structure-mass="2000">
-
-            <h3>
-
-                LIGHTWEIGHT / இலகுரக
-
-            </h3>
-
-            <p>
-
-                Lightweight structure
-                /
-                இலகுரக கட்டமைப்பு
-
-            </p>
-
-            <div class="value">
-
-                2,000 kg
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="structure"
-            data-structure="standard"
-            data-structure-mass="3500">
-
-            <h3>
-
-                STANDARD / நிலையான
-
-            </h3>
-
-            <p>
-
-                Standard structure
-                /
-                நிலையான கட்டமைப்பு
-
-            </p>
-
-            <div class="value">
-
-                3,500 kg
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="structure"
-            data-structure="heavy"
-            data-structure-mass="6000">
-
-            <h3>
-
-                HEAVY-DUTY / வலுவூட்டப்பட்ட
-
-            </h3>
-
-            <p>
-
-                Reinforced structure
-                /
-                வலுவூட்டப்பட்ட கட்டமைப்பு
-
-            </p>
-
-            <div class="value">
-
-                6,000 kg
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-
-<!-- ENGINE COUNT -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        ENGINE COUNT / இயந்திர எண்ணிக்கை
-
-    </div>
-
-    <div class="section-sub">
-
-        Select number of engines /
-        இயந்திரங்களின் எண்ணிக்கையை தேர்வு செய்யவும்
-
-    </div>
-
-
-    <div class="cards">
-
-
-        <div
-            class="option"
-            data-type="count"
-            data-count="1">
-
-            <h3>
-
-                SINGLE / ஒன்று
-
-            </h3>
-
-            <p>
-
-                1 engine
-                /
-                1 இயந்திரம்
-
-            </p>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="count"
-            data-count="2">
-
-            <h3>
-
-                TWIN / இரண்டு
-
-            </h3>
-
-            <p>
-
-                2 engines
-                /
-                2 இயந்திரங்கள்
-
-            </p>
-
-        </div>
-
-
-        <div
-            class="option"
-            data-type="count"
-            data-count="3">
-
-            <h3>
-
-                TRIPLE / மூன்று
-
-            </h3>
-
-            <p>
-
-                3 engines
-                /
-                3 இயந்திரங்கள்
-
-            </p>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-</div>
-
-
-
-<!-- =========================================================
-     RIGHT DASHBOARD
-========================================================= -->
-
-<div class="panel dashboard">
-
-    <h2>
-
-        MISSION DASHBOARD
-        /
-        பணி கட்டுப்பாட்டு பலகை
-
-    </h2>
-
-    <div class="dashboard-sub">
-
-        Real-time rocket analysis
-        /
-        ராக்கெட்டின் நேரடி பகுப்பாய்வு
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            PAYLOAD / சுமை
-
-        </div>
-
-        <div
-            class="value"
-            id="payloadValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            FUEL / எரிபொருள்
-
-        </div>
-
-        <div
-            class="value"
-            id="fuelValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            ENGINE / இயந்திரம்
-
-        </div>
-
-        <div
-            class="value"
-            id="engineValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            TOTAL MASS / மொத்த எடை
-
-        </div>
-
-        <div
-            class="value"
-            id="massValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            TOTAL THRUST / மொத்த உந்துவிசை
-
-        </div>
-
-        <div
-            class="value"
-            id="thrustValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            THRUST / WEIGHT
-            /
-            உந்துவிசை / எடை
-
-        </div>
-
-        <div
-            class="value"
-            id="twValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            ESTIMATED Δv
-            /
-            மதிப்பிடப்பட்ட Δv
-
-        </div>
-
-        <div
-            class="value"
-            id="dvValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            GUIDANCE / வழிகாட்டி
-
-        </div>
-
-        <div
-            class="value"
-            id="guidanceValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <div class="metric">
-
-        <div class="name">
-
-            STABILITY / நிலைத்தன்மை
-
-        </div>
-
-        <div
-            class="value"
-            id="stabilityValue">
-
-            —
-
-        </div>
-
-    </div>
-
-
-    <!-- PROGRESS -->
-
-    <div class="progress-section">
-
-        <div class="progress-label">
-
-            <span>
-
-                THRUST / உந்துவிசை
-
-            </span>
-
-            <span id="thrustPercent">
-
-                0%
-
-            </span>
-
-        </div>
-
-        <div class="progress">
-
-            <div
-                class="progress-bar"
-                id="thrustBar">
-            </div>
-
-        </div>
-
-
-        <div class="progress-label">
-
-            <span>
-
-                Δv / வேக மாற்றம்
-
-            </span>
-
-            <span id="dvPercent">
-
-                0%
-
-            </span>
-
-        </div>
-
-        <div class="progress">
-
-            <div
-                class="progress-bar"
-                id="dvBar">
-            </div>
-
-        </div>
-
-
-        <div class="progress-label">
-
-            <span>
-
-                MISSION FIT / பணி பொருத்தம்
-
-            </span>
-
-            <span id="fitPercent">
-
-                0%
-
-            </span>
-
-        </div>
-
-        <div class="progress">
-
-            <div
-                class="progress-bar"
-                id="fitBar">
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- SCORE -->
-
-    <div class="score-box">
-
-        <div
-            class="score"
-            id="score">
-
-            0
-
-        </div>
-
-        <div class="score-label">
-
-            ROCKET DESIGN SCORE
-            /
-            ராக்கெட் வடிவமைப்பு மதிப்பெண்
-
-        </div>
-
-    </div>
-
-
-    <button
-        class="launch-btn"
-        id="launchBtn"
-        disabled>
-
-        🚀 LAUNCH MISSION
-        /
-        ராக்கெட்டை செலுத்து
-
-    </button>
-
-
-    <button
-        class="reset-btn"
-        id="resetBtn">
-
-        RESET DESIGN
-        /
-        வடிவமைப்பை மீட்டமை
-
-    </button>
-
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- =========================================================
-     LAUNCH ANIMATION
-========================================================= -->
-
-<div
-    class="launch-animation"
-    id="launchAnimation">
-
-    <div
-        class="launch-text"
-        id="launchText">
-
-        IGNITION...
-        /
-        பற்றவைத்தல்...
-
-    </div>
-
-    <div class="rocket">
-
-        🚀
-
-        <div class="rocket-flame">
-
-            🔥
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =========================================================
-     RESULT
-========================================================= -->
-
-<div
-    class="result"
-    id="result">
-
-    <div class="result-box">
-
-        <div
-            class="result-icon"
-            id="resultIcon">
-
-            🚀
-
-        </div>
-
-
-        <h2 id="resultTitle">
-
-        </h2>
-
-
-        <p id="resultMessage">
-
-        </p>
-
-
-        <div
-            class="failure-reasons"
-            id="failureReasons"
-            style="display:none">
-
-        </div>
-
-
-        <div class="result-stats">
-
-
-            <div class="result-stat">
-
-                <small>
-
-                    TOTAL MASS
-                    /
-                    மொத்த எடை
-
-                </small>
-
-                <b id="resultMass">
-
-                    —
-
-                </b>
-
-            </div>
-
-
-            <div class="result-stat">
-
-                <small>
-
-                    THRUST
-                    /
-                    உந்துவிசை
-
-                </small>
-
-                <b id="resultThrust">
-
-                    —
-
-                </b>
-
-            </div>
-
-
-            <div class="result-stat">
-
-                <small>
-
-                    T/W RATIO
-                    /
-                    T/W விகிதம்
-
-                </small>
-
-                <b id="resultTW">
-
-                    —
-
-                </b>
-
-            </div>
-
-
-            <div class="result-stat">
-
-                <small>
-
-                    Δv
-                    /
-                    வேக மாற்றம்
-
-                </small>
-
-                <b id="resultDV">
-
-                    —
-
-                </b>
-
-            </div>
-
-
-        </div>
-
-
-        <button
-            id="tryAgainBtn"
-            onclick="closeResult()">
-
-            TRY AGAIN
-            /
-            மீண்டும் முயற்சி
-
-        </button>
-
-
-        <button
-            id="nextMissionBtn"
-            onclick="nextMission()">
-
-            NEXT MISSION
-            /
-            அடுத்த பணி
-
-        </button>
-
-
-    </div>
-
-</div>
-
-
 
 <script>
-
-/* =========================================================
-   STATE
-========================================================= */
-
-const state = {
-
-    payload: null,
-
-    fuel: null,
-
-    engine: null,
-
-    guidance: null,
-
-    structure: null,
-
-    count: null
-
-};
-
-
-/* =========================================================
-   MISSION REQUIREMENTS
-========================================================= */
-
+/* Mission Constraints */
 const mission = {
-
     payload: 500,
-
     minTW: 1.20,
-
     minDV: 5.50,
-
+    maxMass: 70000,
     requiredGuidance: "advanced",
-
-    requiredEngineThrust: 900,
-
+    requiredEngine: "B",
     requiredFuel: 50000,
-
-    requiredStructure: "standard",
-
-    requiredEngineCount: 1,
-
-    maxMass: 70000
-
+    requiredStructure: "standard"
 };
 
+const engines = {
+    A: { thrust: 600, isp: 300, mass: 4000 },
+    B: { thrust: 900, isp: 330, mass: 5500 },
+    C: { thrust: 1200, isp: 350, mass: 8000 }
+};
 
-/* =========================================================
-   OPTION SELECTION
-========================================================= */
+const guidanceData = {
+    standard: { mass: 150, quality: 65 },
+    advanced: { mass: 300, quality: 95 }
+};
 
-document
-.querySelectorAll(".option")
-.forEach(card => {
+const structureData = {
+    light: { mass: 2000, quality: 70 },
+    standard: { mass: 3500, quality: 90 },
+    heavy: { mass: 6000, quality: 80 }
+};
 
-    card.addEventListener(
-        "click",
-        function() {
+const partMasses = {
+    nose: 500, third: 2000, second: 4000, first: 8000,
+    fuel: 0, guidance: 0, structure: 0, engine: 0, nozzle: 800
+};
 
-            const type =
-                this.dataset.type;
+/* SVG Component Library */
+const rocketSVGParts = {
+    nose: `<svg viewBox="0 0 180 90" preserveAspectRatio="none" style="width:100%;height:100%;"><path d="M 90,5 C 130,35 160,65 160,90 L 20,90 C 20,65 50,35 90,5 Z" fill="url(#noseGrad)" stroke="#cbd5e1" stroke-width="2"/><defs><linearGradient id="noseGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#dc2626"/><stop offset="50%" stop-color="#ef476f"/><stop offset="100%" stop-color="#991b1b"/></linearGradient></defs></svg>`,
+    third: `<svg viewBox="0 0 180 70" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="20" y="0" width="140" height="70" rx="3" fill="url(#thirdGrad)" stroke="#cbd5e1" stroke-width="2"/><circle cx="90" cy="18" r="7" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/><defs><linearGradient id="thirdGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0284c7"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient></defs></svg>`,
+    second: `<svg viewBox="0 0 180 85" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="18" y="0" width="144" height="85" rx="3" fill="url(#secondGrad)" stroke="#cbd5e1" stroke-width="2"/><text x="90" y="48" font-family="Orbitron, sans-serif" font-size="12" fill="#ffffff" font-weight="bold" text-anchor="middle">STAGE 2</text><defs><linearGradient id="secondGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#15803d"/><stop offset="50%" stop-color="#22c55e"/><stop offset="100%" stop-color="#166534"/></linearGradient></defs></svg>`,
+    first: `<svg viewBox="0 0 180 110" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="15" y="0" width="150" height="110" rx="3" fill="url(#firstGrad)" stroke="#cbd5e1" stroke-width="2"/><path d="M 15,40 L 0,105 L 15,105 Z" fill="#b91c1c"/><path d="M 165,40 L 180,105 L 165,105 Z" fill="#b91c1c"/><defs><linearGradient id="firstGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#d97706"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#b45309"/></linearGradient></defs></svg>`,
+    fuel: `<svg viewBox="0 0 180 70" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="25" y="0" width="130" height="70" rx="6" fill="#475569" stroke="#94a3b8" stroke-width="2"/><text x="90" y="40" font-family="Orbitron, sans-serif" font-size="12" fill="#facc15" text-anchor="middle">PROPELLANT</text></svg>`,
+    guidance: `<svg viewBox="0 0 180 50" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="30" y="0" width="120" height="50" rx="4" fill="#a855f7" stroke="#ffffff" stroke-width="2"/><text x="90" y="30" font-family="Orbitron, sans-serif" font-size="11" fill="#ffffff" text-anchor="middle">NAV / GUIDANCE</text></svg>`,
+    structure: `<svg viewBox="0 0 180 50" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="20" y="0" width="140" height="50" rx="2" fill="#334155" stroke="#64748b" stroke-width="2"/><line x1="20" y1="25" x2="160" y2="25" stroke="#94a3b8" stroke-dasharray="4"/></svg>`,
+    engine: `<svg viewBox="0 0 180 60" preserveAspectRatio="none" style="width:100%;height:100%;"><path d="M 45,0 L 135,0 L 150,60 L 30,60 Z" fill="#e11d48" stroke="#ffffff" stroke-width="2"/><text x="90" y="35" font-family="Orbitron, sans-serif" font-size="11" fill="#ffffff" text-anchor="middle">MAIN ENGINE</text></svg>`,
+    nozzle: `<svg viewBox="0 0 180 60" preserveAspectRatio="none" style="width:100%;height:100%;"><path d="M 40,0 L 140,0 L 155,50 L 25,50 Z" fill="#1e293b" stroke="#cbd5e1" stroke-width="2"/><rect x="60" y="50" width="60" height="10" fill="#000000"/></svg>`
+};
 
+const defaultPartsList = [
+    { type: 'nose', title: 'Nose Cone / முனை கூம்பு', desc: 'Aerodynamic Payload Top' },
+    { type: 'third', title: 'Third Stage / மூன்றாம் நிலை', desc: 'Upper Space Stage' },
+    { type: 'second', title: 'Second Stage / இரண்டாம் நிலை', desc: 'Mid Orbit Stage' },
+    { type: 'first', title: 'First Stage / முதல் நிலை', desc: 'Main Core Booster' },
+    { type: 'fuel', title: 'Fuel Tank / எரிபொருள் தொட்டி', desc: 'Propellant Reservoir' },
+    { type: 'guidance', title: 'Guidance / வழிகாட்டி', desc: 'Avionics Navigation' },
+    { type: 'structure', title: 'Structure / கட்டமைப்பு', desc: 'Interstage Body' },
+    { type: 'engine', title: 'Engine / இயந்திரம்', desc: 'Combustion Chamber' },
+    { type: 'nozzle', title: 'Nozzle / முனை', desc: 'Exhaust Cone Outlet' }
+];
 
-            document
-            .querySelectorAll(
-                `.option[data-type="${type}"]`
-            )
-            .forEach(item => {
+let configuration = {
+    payload: 500, stages: 3, fuel: 50000, engine: "B", guidance: "advanced", structure: "standard"
+};
 
-                item.classList.remove(
-                    "selected"
-                );
+let placed = {}; // Map slot -> dragged type
 
-            });
+function showScreen(id) {
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
+function showMission() { showScreen("missionScreen"); }
+function showConfig() { showScreen("configScreen"); }
 
-            this.classList.add(
-                "selected"
-            );
+function updateConfig() {
+    configuration.payload = parseInt(document.getElementById("payload").value);
+    configuration.stages = parseInt(document.getElementById("stages").value);
+    configuration.fuel = parseInt(document.getElementById("fuel").value);
+    configuration.engine = document.getElementById("engine").value;
+    configuration.guidance = document.getElementById("guidance").value;
+    configuration.structure = document.getElementById("structure").value;
 
+    document.getElementById("payloadValue").textContent = configuration.payload;
+    document.getElementById("sumPayload").textContent = configuration.payload + " kg";
+    document.getElementById("sumFuel").textContent = configuration.fuel.toLocaleString() + " kg";
+    document.getElementById("sumStages").textContent = configuration.stages;
+    document.getElementById("sumEngine").textContent = configuration.engine;
 
-            if(type === "payload") {
+    renderAssemblySlots();
+}
 
-                state.payload =
-                    Number(
-                        this.dataset.value
-                    );
-
-            }
-
-
-            if(type === "fuel") {
-
-                state.fuel =
-                    Number(
-                        this.dataset.fuel
-                    );
-
-            }
-
-
-            if(type === "engine") {
-
-                state.engine = {
-
-                    thrust:
-                        Number(
-                            this.dataset.thrust
-                        ),
-
-                    isp:
-                        Number(
-                            this.dataset.isp
-                        ),
-
-                    mass:
-                        Number(
-                            this.dataset.engineMass
-                        )
-
-                };
-
-            }
-
-
-            if(type === "guidance") {
-
-                state.guidance = {
-
-                    type:
-                        this.dataset.guidance,
-
-                    mass:
-                        Number(
-                            this.dataset.guidanceMass
-                        )
-
-                };
-
-            }
-
-
-            if(type === "structure") {
-
-                state.structure = {
-
-                    type:
-                        this.dataset.structure,
-
-                    mass:
-                        Number(
-                            this.dataset.structureMass
-                        )
-
-                };
-
-            }
-
-
-            if(type === "count") {
-
-                state.count =
-                    Number(
-                        this.dataset.count
-                    );
-
-            }
-
-
-            calculate();
-
+function renderAssemblySlots() {
+    const slots = document.querySelectorAll(".slot");
+    slots.forEach(slot => {
+        const type = slot.dataset.slot;
+        if (type === "second" && configuration.stages < 2) {
+            slot.style.display = "none";
+        } else if (type === "third" && configuration.stages < 3) {
+            slot.style.display = "none";
+        } else {
+            slot.style.display = "flex";
         }
-
-    );
-
-});
-
-
-/* =========================================================
-   CALCULATE
-========================================================= */
-
-function calculate() {
-
-    if(
-
-        state.payload === null ||
-
-        state.fuel === null ||
-
-        !state.engine ||
-
-        !state.guidance ||
-
-        !state.structure ||
-
-        state.count === null
-
-    ) {
-
-        document
-        .getElementById(
-            "launchBtn"
-        )
-        .disabled = true;
-
-        return;
-
-    }
-
-
-    /*
-       MASS
-    */
-
-    const engineMass =
-
-        state.engine.mass *
-        state.count;
-
-
-    const totalMass =
-
-        state.payload +
-
-        state.fuel +
-
-        engineMass +
-
-        state.structure.mass +
-
-        state.guidance.mass;
-
-
-    /*
-       THRUST
-    */
-
-    const thrust =
-
-        state.engine.thrust *
-        state.count;
-
-
-    /*
-       WEIGHT
-    */
-
-    const weight =
-
-        totalMass *
-        9.81;
-
-
-    /*
-       THRUST / WEIGHT
-    */
-
-    const tw =
-
-        (thrust * 1000) /
-        weight;
-
-
-    /*
-       ROCKET EQUATION
-
-       Δv = Isp × g0 × ln(m0/mf)
-    */
-
-    const dryMass =
-
-        totalMass -
-        state.fuel;
-
-
-    const massRatio =
-
-        totalMass /
-        dryMass;
-
-
-    const dv =
-
-        state.engine.isp *
-        9.81 *
-        Math.log(
-            massRatio
-        ) /
-        1000;
-
-
-    /*
-       STABILITY
-    */
-
-    let stability = 100;
-
-
-    if(tw < 1.2)
-        stability -= 40;
-
-
-    if(tw > 4)
-        stability -= 10;
-
-
-    if(
-        state.guidance.type ===
-        "standard"
-    )
-        stability -= 15;
-
-
-    if(
-        state.structure.type ===
-        "light"
-    )
-        stability -= 10;
-
-
-    if(
-        state.structure.type ===
-        "heavy"
-    )
-        stability += 5;
-
-
-    stability =
-
-        Math.max(
-            0,
-            Math.min(
-                100,
-                stability
-            )
-        );
-
-
-    /*
-       SCORE
-    */
-
-    const thrustScore =
-
-        Math.min(
-            100,
-            (tw / 1.8) * 100
-        );
-
-
-    const dvScore =
-
-        Math.min(
-            100,
-            (dv /
-            mission.minDV) *
-            100
-        );
-
-
-    const massScore =
-
-        totalMass <=
-        mission.maxMass
-
-        ?
-
-        100
-
-        :
-
-        Math.max(
-            0,
-            100 -
-            (
-                (
-                    totalMass -
-                    mission.maxMass
-                ) / 1000
-            )
-        );
-
-
-    const score =
-
-        Math.round(
-
-            thrustScore * 0.30 +
-
-            dvScore * 0.35 +
-
-            stability * 0.20 +
-
-            massScore * 0.15
-
-        );
-
-
-    /*
-       MISSION FIT
-    */
-
-    let fit = 0;
-
-
-    if(
-        state.payload ===
-        mission.payload
-    )
-        fit += 25;
-
-
-    if(
-        tw >= mission.minTW
-    )
-        fit += 25;
-
-
-    if(
-        dv >= mission.minDV
-    )
-        fit += 25;
-
-
-    if(
-        state.guidance.type ===
-        mission.requiredGuidance
-    )
-        fit += 15;
-
-
-    if(
-        totalMass <=
-        mission.maxMass
-    )
-        fit += 10;
-
-
-    /*
-       UPDATE DASHBOARD
-    */
-
-    setText(
-        "payloadValue",
-        formatNumber(
-            state.payload
-        ) +
-        " kg"
-    );
-
-
-    setText(
-        "fuelValue",
-        formatNumber(
-            state.fuel
-        ) +
-        " kg"
-    );
-
-
-    setText(
-
-        "engineValue",
-
-        state.count +
-        " × " +
-        state.engine.thrust +
-        " kN"
-
-    );
-
-
-    setText(
-
-        "massValue",
-
-        formatNumber(
-            Math.round(
-                totalMass
-            )
-        ) +
-        " kg"
-
-    );
-
-
-    setText(
-
-        "thrustValue",
-
-        thrust +
-        " kN"
-
-    );
-
-
-    setText(
-
-        "twValue",
-
-        tw.toFixed(2)
-
-    );
-
-
-    setText(
-
-        "dvValue",
-
-        dv.toFixed(2) +
-        " km/s"
-
-    );
-
-
-    setText(
-
-        "guidanceValue",
-
-        state.guidance.type
-        .toUpperCase()
-
-    );
-
-
-    setText(
-
-        "stabilityValue",
-
-        Math.round(
-            stability
-        ) +
-        "%"
-
-    );
-
-
-    setText(
-        "score",
-        score
-    );
-
-
-    /*
-       PROGRESS
-    */
-
-    const thrustProgress =
-
-        Math.min(
-            100,
-            (tw / 2) *
-            100
-        );
-
-
-    const dvProgress =
-
-        Math.min(
-            100,
-            (dv /
-            mission.minDV) *
-            100
-        );
-
-
-    document
-    .getElementById(
-        "thrustBar"
-    )
-    .style.width =
-
-        thrustProgress +
-        "%";
-
-
-    document
-    .getElementById(
-        "dvBar"
-    )
-    .style.width =
-
-        dvProgress +
-        "%";
-
-
-    document
-    .getElementById(
-        "fitBar"
-    )
-    .style.width =
-
-        fit +
-        "%";
-
-
-    setText(
-
-        "thrustPercent",
-
-        Math.round(
-            thrustProgress
-        ) +
-        "%"
-
-    );
-
-
-    setText(
-
-        "dvPercent",
-
-        Math.round(
-            dvProgress
-        ) +
-        "%"
-
-    );
-
-
-    setText(
-
-        "fitPercent",
-
-        fit +
-        "%"
-
-    );
-
-
-    setStatusClass(
-        "twValue",
-        tw >= mission.minTW
-    );
-
-
-    setStatusClass(
-        "dvValue",
-        dv >= mission.minDV
-    );
-
-
-    setStatusClass(
-        "stabilityValue",
-        stability >= 70
-    );
-
-
-    /*
-       SAVE
-    */
-
-    window.currentCalculation = {
-
-        totalMass,
-        thrust,
-        tw,
-        dv,
-        stability,
-        score,
-        fit
-
-    };
-
-
-    document
-    .getElementById(
-        "launchBtn"
-    )
-    .disabled = false;
-
+    });
 }
 
-
-/* =========================================================
-   UTILITY
-========================================================= */
-
-function setText(
-    id,
-    value
-) {
-
-    document
-    .getElementById(id)
-    .textContent = value;
-
+function startBuild() {
+    resetBuild();
+    showScreen("buildScreen");
+    renderShuffledParts();
+    setupDragAndDrop();
 }
 
-
-function formatNumber(
-    value
-) {
-
-    return Number(value)
-        .toLocaleString();
-
+function shuffleArray(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
 }
 
-
-function setStatusClass(
-    id,
-    good
-) {
-
-    const element =
-        document.getElementById(id);
-
-
-    element.classList.remove(
-
-        "good",
-        "bad",
-        "warning"
-
-    );
-
-
-    element.classList.add(
-
-        good
-        ? "good"
-        : "bad"
-
-    );
-
-}
-
-
-/* =========================================================
-   LAUNCH BUTTON
-========================================================= */
-
-document
-.getElementById(
-    "launchBtn"
-)
-.addEventListener(
-    "click",
-    launchMission
-);
-
-
-/* =========================================================
-   LAUNCH MISSION
-========================================================= */
-
-function launchMission() {
-
-    if(
-        !window.currentCalculation
-    )
-        return;
-
-
-    const calc =
-        window.currentCalculation;
-
-
-    /*
-       CHECKS
-    */
-
-    const correctPayload =
-
-        state.payload ===
-        mission.payload;
-
-
-    const sufficientThrust =
-
-        calc.tw >=
-        mission.minTW;
-
-
-    const sufficientDV =
-
-        calc.dv >=
-        mission.minDV;
-
-
-    const correctGuidance =
-
-        state.guidance.type ===
-        mission.requiredGuidance;
-
-
-    const correctEngine =
-
-        state.engine.thrust ===
-        mission.requiredEngineThrust;
-
-
-    const correctFuel =
-
-        state.fuel ===
-        mission.requiredFuel;
-
-
-    const correctStructure =
-
-        state.structure.type ===
-        mission.requiredStructure;
-
-
-    const correctEngineCount =
-
-        state.count ===
-        mission.requiredEngineCount;
-
-
-    const acceptableMass =
-
-        calc.totalMass <=
-        mission.maxMass;
-
-
-    /*
-       ALL MUST BE TRUE
-    */
-
-    const success =
-
-        correctPayload &&
-
-        sufficientThrust &&
-
-        sufficientDV &&
-
-        correctGuidance &&
-
-        correctEngine &&
-
-        correctFuel &&
-
-        correctStructure &&
-
-        correctEngineCount &&
-
-        acceptableMass;
-
-
-    /*
-       RESULT VALUES
-    */
-
-    setText(
-
-        "resultMass",
-
-        formatNumber(
-            Math.round(
-                calc.totalMass
-            )
-        ) +
-        " kg"
-
-    );
-
-
-    setText(
-
-        "resultThrust",
-
-        calc.thrust +
-        " kN"
-
-    );
-
-
-    setText(
-
-        "resultTW",
-
-        calc.tw.toFixed(2)
-
-    );
-
-
-    setText(
-
-        "resultDV",
-
-        calc.dv.toFixed(2) +
-        " km/s"
-
-    );
-
-
-    if(success) {
-
-        showSuccess(
-            calc
-        );
-
-    }
-
-    else {
-
-        showFailure(
-
-            calc,
-
-            {
-
-                correctPayload,
-
-                sufficientThrust,
-
-                sufficientDV,
-
-                correctGuidance,
-
-                correctEngine,
-
-                correctFuel,
-
-                correctStructure,
-
-                correctEngineCount,
-
-                acceptableMass
-
-            }
-
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   SUCCESS
-========================================================= */
-
-function showSuccess(
-    calc
-) {
-
-    const result =
-        document.getElementById(
-            "result"
-        );
-
-
-    result.className =
-        "result success";
-
-
-    setText(
-        "resultIcon",
-        "🚀"
-    );
-
-
-    setText(
-
-        "resultTitle",
-
-        "MISSION SUCCESS / பணி வெற்றி"
-
-    );
-
-
-    setText(
-
-        "resultMessage",
-
-        "LAUNCH SUCCESSFUL! Your rocket completed the assigned mission."
-        +
-        "\n\n"
-        +
-        "செலுத்துதல் வெற்றி! உங்கள் ராக்கெட் கொடுக்கப்பட்ட பணியை வெற்றிகரமாக முடித்தது."
-
-    );
-
-
-    document
-    .getElementById(
-        "failureReasons"
-    )
-    .style.display =
-        "none";
-
-
-    setText(
-
-        "headerStatus",
-
-        "SUCCESS / வெற்றி"
-
-    );
-
-
-    document
-    .getElementById(
-        "headerStatus"
-    )
-    .style.color =
-        "#4ce49b";
-
-
-    setText(
-
-        "headerScore",
-
-        calc.score
-
-    );
-
-
-    result.style.display =
-        "flex";
-
-}
-
-
-/* =========================================================
-   FAILURE
-========================================================= */
-
-function showFailure(
-    calc,
-    checks
-) {
-
-    const result =
-        document.getElementById(
-            "result"
-        );
-
-
-    result.className =
-        "result failure";
-
-
-    setText(
-        "resultIcon",
-        "⚠️"
-    );
-
-
-    setText(
-
-        "resultTitle",
-
-        "MISSION FAILED / பணி தோல்வி"
-
-    );
-
-
-    setText(
-
-        "resultMessage",
-
-        "LAUNCH ABORTED. Your rocket configuration does not satisfy the mission requirements."
-        +
-        "\n\n"
-        +
-        "செலுத்துதல் நிறுத்தப்பட்டது. உங்கள் ராக்கெட் அமைப்பு பணி தேவைகளை பூர்த்தி செய்யவில்லை."
-
-    );
-
-
-    let reasons = [];
-
-
-    if(!checks.correctPayload) {
-
-        reasons.push(
-
-            `❌ PAYLOAD / சுமை தவறாக உள்ளது.
-            Selected / தேர்வு: ${state.payload} kg.
-            Required / தேவையானது: 500 kg.`
-
-        );
-
-    }
-
-
-    if(!checks.correctFuel) {
-
-        reasons.push(
-
-            `❌ FUEL / எரிபொருள் கொள்ளளவு தவறாக உள்ளது.
-            HIGH / அதிகம் — 50,000 kg தேவை.
-            / HIGH — 50,000 kg is required.`
-
-        );
-
-    }
-
-
-    if(!checks.correctEngine) {
-
-        reasons.push(
-
-            `❌ ENGINE / இயந்திரம் தவறாக உள்ளது.
-            ENGINE B — 900 kN தேவை.
-            / ENGINE B — 900 kN is required.`
-
-        );
-
-    }
-
-
-    if(!checks.correctEngineCount) {
-
-        reasons.push(
-
-            `❌ ENGINE COUNT / இயந்திர எண்ணிக்கை தவறாக உள்ளது.
-            1 engine / 1 இயந்திரம் தேவை.`
-
-        );
-
-    }
-
-
-    if(!checks.correctGuidance) {
-
-        reasons.push(
-
-            `❌ GUIDANCE / வழிகாட்டி அமைப்பு போதுமானதாக இல்லை.
-            ADVANCED / மேம்பட்ட வழிகாட்டி தேவை.`
-
-        );
-
-    }
-
-
-    if(!checks.correctStructure) {
-
-        reasons.push(
-
-            `❌ STRUCTURE / கட்டமைப்பு தவறாக உள்ளது.
-            STANDARD / நிலையான கட்டமைப்பு தேவை.`
-
-        );
-
-    }
-
-
-    if(!checks.sufficientThrust) {
-
-        reasons.push(
-
-            `❌ INSUFFICIENT THRUST / போதுமான உந்துவிசை இல்லை.
-            Current T/W / தற்போதைய T/W: ${calc.tw.toFixed(2)}.
-            Required / தேவையானது: 1.20.`
-
-        );
-
-    }
-
-
-    if(!checks.sufficientDV) {
-
-        reasons.push(
-
-            `❌ INSUFFICIENT Δv / போதுமான Δv இல்லை.
-            Available / கிடைத்தது: ${calc.dv.toFixed(2)} km/s.
-            Required / தேவையானது: 5.50 km/s.`
-
-        );
-
-    }
-
-
-    if(!checks.acceptableMass) {
-
-        reasons.push(
-
-            `❌ MASS TOO HIGH / மொத்த எடை அதிகமாக உள்ளது.
-            Maximum / அதிகபட்சம்: 70,000 kg.`
-
-        );
-
-    }
-
-
-    const reasonBox =
-        document.getElementById(
-            "failureReasons"
-        );
-
-
-    reasonBox.innerHTML =
-        reasons
-        .map(
-            reason =>
-            `<div>${reason}</div>`
-        )
-        .join("");
-
-
-    reasonBox.style.display =
-        "block";
-
-
-    setText(
-
-        "headerStatus",
-
-        "FAILED / தோல்வி"
-
-    );
-
-
-    document
-    .getElementById(
-        "headerStatus"
-    )
-    .style.color =
-        "#ff6478";
-
-
-    setText(
-
-        "headerScore",
-
-        calc.score
-
-    );
-
-
-    result.style.display =
-        "flex";
-
-}
-
-
-/* =========================================================
-   CLOSE RESULT
-========================================================= */
-
-function closeResult() {
-
-    document
-    .getElementById(
-        "result"
-    )
-    .style.display =
-        "none";
-
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-document
-.getElementById(
-    "resetBtn"
-)
-.addEventListener(
-    "click",
-    resetDesign
-);
-
-
-function resetDesign() {
-
-    state.payload =
-        null;
-
-    state.fuel =
-        null;
-
-    state.engine =
-        null;
-
-    state.guidance =
-        null;
-
-    state.structure =
-        null;
-
-    state.count =
-        null;
-
-
-    document
-    .querySelectorAll(
-        ".option"
-    )
-    .forEach(card => {
-
-        card.classList.remove(
-            "selected"
-        );
-
+function renderShuffledParts() {
+    const container = document.getElementById("partsContainer");
+    container.innerHTML = "";
+    
+    let activeParts = defaultPartsList.filter(p => {
+        if (p.type === "second" && configuration.stages < 2) return false;
+        if (p.type === "third" && configuration.stages < 3) return false;
+        return true;
     });
 
+    const shuffled = shuffleArray(activeParts);
+    shuffled.forEach(part => {
+        const card = document.createElement("div");
+        card.className = "part-card";
+        card.draggable = true;
+        card.dataset.type = part.type;
 
-    const ids = [
-
-        "payloadValue",
-
-        "fuelValue",
-
-        "engineValue",
-
-        "massValue",
-
-        "thrustValue",
-
-        "twValue",
-
-        "dvValue",
-
-        "guidanceValue",
-
-        "stabilityValue"
-
-    ];
-
-
-    ids.forEach(
-        id =>
-        setText(
-            id,
-            "—"
-        )
-    );
-
-
-    setText(
-        "score",
-        "0"
-    );
-
-
-    document
-    .getElementById(
-        "thrustBar"
-    )
-    .style.width =
-        "0%";
-
-
-    document
-    .getElementById(
-        "dvBar"
-    )
-    .style.width =
-        "0%";
-
-
-    document
-    .getElementById(
-        "fitBar"
-    )
-    .style.width =
-        "0%";
-
-
-    setText(
-        "thrustPercent",
-        "0%"
-    );
-
-
-    setText(
-        "dvPercent",
-        "0%"
-    );
-
-
-    setText(
-        "fitPercent",
-        "0%"
-    );
-
-
-    document
-    .getElementById(
-        "launchBtn"
-    )
-    .disabled =
-        true;
-
-
-    setText(
-
-        "headerStatus",
-
-        "INCOMPLETE / முழுமையடையவில்லை"
-
-    );
-
-
-    document
-    .getElementById(
-        "headerStatus"
-    )
-    .style.color =
-        "#ffb84d";
-
-
-    setText(
-        "headerScore",
-        "0"
-    );
-
-
-    window.currentCalculation =
-        null;
-
+        card.innerHTML = `
+            <div class="part-preview-svg">${rocketSVGParts[part.type]}</div>
+            <div class="part-info">
+                <div class="part-title">${part.title}</div>
+                <div class="part-desc">${part.desc}</div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
 }
 
+function setupDragAndDrop() {
+    const parts = document.querySelectorAll(".part-card");
+    const slots = document.querySelectorAll(".slot");
 
-/* =========================================================
-   NEXT MISSION
-========================================================= */
+    parts.forEach(part => {
+        part.addEventListener("dragstart", e => {
+            e.dataTransfer.setData("type", part.dataset.type);
+        });
+    });
 
-function nextMission() {
+    slots.forEach(slot => {
+        slot.addEventListener("dragover", e => {
+            e.preventDefault();
+            slot.classList.add("drag-over");
+        });
 
-    closeResult();
+        slot.addEventListener("dragleave", () => {
+            slot.classList.remove("drag-over");
+        });
 
-    resetDesign();
+        slot.addEventListener("drop", e => {
+            e.preventDefault();
+            slot.classList.remove("drag-over");
+            const draggedType = e.dataTransfer.getData("type");
+            const slotType = slot.dataset.slot;
 
-    alert(
-
-        "MISSION 02 / பணி 02\n\n" +
-
-        "Coming soon / விரைவில் சேர்க்கப்படும்!"
-
-    );
-
+            placePart(slot, slotType, draggedType);
+        });
+    });
 }
 
+function placePart(slot, slotType, draggedType) {
+    if (placed[slotType]) return;
+
+    placed[slotType] = draggedType;
+
+    const partElem = document.querySelector(`.part-card[data-type="${draggedType}"]`);
+    if (partElem) partElem.classList.add("used");
+
+    slot.innerHTML = `
+        <div class="placed-part-svg">
+            ${rocketSVGParts[draggedType]}
+            <button class="remove-btn" onclick="removePart('${slotType}', event)">×</button>
+        </div>
+    `;
+
+    updateTelemetry();
+}
+
+function removePart(slotType, event) {
+    if (event) event.stopPropagation();
+
+    const draggedType = placed[slotType];
+    delete placed[slotType];
+
+    if (draggedType) {
+        const partElem = document.querySelector(`.part-card[data-type="${draggedType}"]`);
+        if (partElem) partElem.classList.remove("used");
+    }
+
+    const slot = document.querySelector(`.slot[data-slot="${slotType}"]`);
+    if (slot) {
+        let labels = {
+            nose: "🔺 NOSE CONE<br>முனை கூம்பு",
+            third: "🟡 THIRD STAGE<br>மூன்றாம் நிலை",
+            second: "🟢 SECOND STAGE<br>இரண்டாம் நிலை",
+            first: "🔵 FIRST STAGE<br>முதல் நிலை",
+            fuel: "🛢️ FUEL TANK<br>எரிபொருள் தொட்டி",
+            guidance: "🧭 GUIDANCE<br>வழிகாட்டி",
+            structure: "⚙️ STRUCTURE<br>கட்டமைப்பு",
+            engine: "🔥 ENGINE<br>இயந்திரம்",
+            nozzle: "🔻 NOZZLE<br>முனை"
+        };
+        slot.innerHTML = labels[slotType];
+    }
+
+    updateTelemetry();
+}
+
+function resetBuild() {
+    placed = {};
+    document.querySelectorAll(".part-card").forEach(p => p.classList.remove("used"));
+    renderAssemblySlots();
+
+    document.querySelectorAll(".slot").forEach(slot => {
+        removePart(slot.dataset.slot, null);
+    });
+
+    updateTelemetry();
+}
+
+function calculateMetrics() {
+    let activeSlots = ["nose", "first", "fuel", "guidance", "structure", "engine", "nozzle"];
+    if (configuration.stages >= 2) activeSlots.push("second");
+    if (configuration.stages >= 3) activeSlots.push("third");
+
+    let placedCount = 0;
+    let isCorrectArrangement = true;
+
+    activeSlots.forEach(s => {
+        if (placed[s]) placedCount++;
+        if (placed[s] !== s) isCorrectArrangement = false;
+    });
+
+    let totalSlots = activeSlots.length;
+    let isFullyAssembled = (placedCount === totalSlots);
+
+    let currentMass = configuration.payload + configuration.fuel + 
+                      engines[configuration.engine].mass + 
+                      guidanceData[configuration.guidance].mass + 
+                      structureData[configuration.structure].mass;
+
+    activeSlots.forEach(s => {
+        if (placed[s] && partMasses[placed[s]]) {
+            currentMass += partMasses[placed[s]];
+        }
+    });
+
+    let currentThrust = placed["engine"] === "engine" ? engines[configuration.engine].thrust : 0;
+    let weight = (currentMass * 9.81) / 1000;
+    let twRatio = weight > 0 ? (currentThrust / weight) : 0;
+
+    let isp = engines[configuration.engine].isp;
+    let dryMass = currentMass - configuration.fuel;
+    let dv = 0;
+    if (dryMass > 0 && currentMass > dryMass && placed["engine"] === "engine" && placed["fuel"] === "fuel") {
+        dv = (isp * 9.81 * Math.log(currentMass / dryMass)) / 1000;
+    }
+
+    let stability = Math.round((placedCount / totalSlots) * 100);
+
+    return {
+        mass: currentMass,
+        thrust: currentThrust,
+        twRatio: twRatio,
+        dv: dv,
+        stability: stability,
+        isFullyAssembled: isFullyAssembled,
+        isCorrectArrangement: isCorrectArrangement
+    };
+}
+
+function updateTelemetry() {
+    const metrics = calculateMetrics();
+
+    document.getElementById("massMetric").textContent = metrics.mass.toLocaleString() + " kg";
+    document.getElementById("thrustMetric").textContent = metrics.thrust + " kN";
+    document.getElementById("twMetric").textContent = metrics.twRatio.toFixed(2);
+    document.getElementById("dvMetric").textContent = metrics.dv.toFixed(2) + " km/s";
+    document.getElementById("stabilityMetric").textContent = metrics.stability + "%";
+
+    document.getElementById("massBar").style.width = Math.min(100, (metrics.mass / mission.maxMass) * 100) + "%";
+    document.getElementById("thrustBar").style.width = Math.min(100, (metrics.thrust / 1200) * 100) + "%";
+    document.getElementById("twBar").style.width = Math.min(100, (metrics.twRatio / 2.5) * 100) + "%";
+    document.getElementById("dvBar").style.width = Math.min(100, (metrics.dv / 8) * 100) + "%";
+    document.getElementById("stabilityBar").style.width = metrics.stability + "%";
+
+    const fitBox = document.getElementById("missionFit");
+    const testBtn = document.getElementById("testButton");
+
+    if (!metrics.isFullyAssembled) {
+        fitBox.className = "status-box warn";
+        fitBox.innerHTML = `<b>INCOMPLETE / முழுமையடையவில்லை</b><br>Assemble all parts to enable launch.`;
+        testBtn.disabled = true;
+    } else if (!metrics.isCorrectArrangement) {
+        fitBox.className = "status-box warn";
+        fitBox.innerHTML = `⚠️ <b>MISARRANGED PARTS!</b><br>Structural components out of order! Vector unstable.`;
+        testBtn.disabled = true; // LAUNCH STRICTLY BLOCKED IF MISARRANGED
+    } else if (metrics.mass > mission.maxMass) {
+        fitBox.className = "status-box warn";
+        fitBox.innerHTML = `<b>OVERWEIGHT / அதிக எடை</b><br>Mass exceeds limit (70,000 kg).`;
+        testBtn.disabled = false;
+    } else if (metrics.twRatio < mission.minTW) {
+        fitBox.className = "status-box warn";
+        fitBox.innerHTML = `<b>LOW THRUST / குறைந்த உந்துவிசை</b><br>T/W ratio is too low (< ${mission.minTW}).`;
+        testBtn.disabled = false;
+    } else if (metrics.dv < mission.minDV) {
+        fitBox.className = "status-box warn";
+        fitBox.innerHTML = `<b>LOW Δv / குறைந்த வேகம்</b><br>Δv insufficient (< ${mission.minDV} km/s).`;
+        testBtn.disabled = false;
+    } else {
+        fitBox.className = "status-box good";
+        fitBox.innerHTML = `✨ <b>READY FOR LAUNCH!</b><br>All telemetry metrics optimal!`;
+        testBtn.disabled = false;
+    }
+}
+
+function testRocket() {
+    showScreen("launchScreen");
+
+    const statusElem = document.getElementById("launchStatus");
+    const countElem = document.getElementById("countNumber");
+    const launchRocketElem = document.getElementById("launchRocket");
+    const launchFlameElem = document.getElementById("launchFlame");
+    const fullVisualContainer = document.getElementById("fullRocketVisual");
+
+    fullVisualContainer.style.width = "120px";
+    fullVisualContainer.style.display = "flex";
+    fullVisualContainer.style.flexDirection = "column";
+    
+    let html = `<div style="height:50px;">${rocketSVGParts.nose}</div>`;
+    if (configuration.stages >= 3) html += `<div style="height:40px;">${rocketSVGParts.third}</div>`;
+    if (configuration.stages >= 2) html += `<div style="height:45px;">${rocketSVGParts.second}</div>`;
+    html += `<div style="height:50px;">${rocketSVGParts.first}</div>`;
+    html += `<div style="height:40px;">${rocketSVGParts.fuel}</div>`;
+    html += `<div style="height:30px;">${rocketSVGParts.guidance}</div>`;
+    html += `<div style="height:30px;">${rocketSVGParts.structure}</div>`;
+    html += `<div style="height:35px;">${rocketSVGParts.engine}</div>`;
+    html += `<div style="height:35px;">${rocketSVGParts.nozzle}</div>`;
+    fullVisualContainer.innerHTML = html;
+
+    launchRocketElem.classList.remove("fly");
+    launchFlameElem.classList.remove("active");
+
+    statusElem.textContent = "SYSTEM CHECK / சரிபார்ப்பு";
+    let count = 3;
+    countElem.textContent = count;
+
+    const timer = setInterval(() => {
+        count--;
+        if (count > 0) {
+            countElem.textContent = count;
+        } else if (count === 0) {
+            countElem.textContent = "🚀";
+            statusElem.textContent = "IGNITION & LIFT OFF!";
+            launchFlameElem.classList.add("active");
+            launchRocketElem.classList.add("fly");
+        } else {
+            clearInterval(timer);
+            setTimeout(() => {
+                evaluateMissionResult();
+            }, 2200);
+        }
+    }, 1000);
+}
+
+function evaluateMissionResult() {
+    showScreen("resultScreen");
+
+    const metrics = calculateMetrics();
+    let failures = [];
+
+    if (metrics.mass > mission.maxMass) {
+        failures.push("Mass exceeds maximum limit (70,000 kg). / எடை வரம்பை மீறியுள்ளது.");
+    }
+    if (metrics.twRatio < mission.minTW) {
+        failures.push(`T/W ratio (${metrics.twRatio.toFixed(2)}) is below minimum required (${mission.minTW}). / உந்துவிசை போதாது.`);
+    }
+    if (metrics.dv < mission.minDV) {
+        failures.push(`Delta-v (${metrics.dv.toFixed(2)} km/s) is insufficient to reach LEO orbit. / வேகம் போதாது.`);
+    }
+    if (configuration.guidance !== mission.requiredGuidance) {
+        failures.push("Standard Guidance accuracy was insufficient for orbital insertion. / வழிகாட்டி போதாது.");
+    }
+    if (configuration.structure === "heavy") {
+        failures.push("Heavy structure added excess drag during atmospheric ascent. / கட்டமைப்பு கனமானது.");
+    }
+
+    const iconElem = document.getElementById("resultIcon");
+    const titleElem = document.getElementById("resultTitle");
+    const textElem = document.getElementById("resultText");
+    const listElem = document.getElementById("failureList");
+
+    if (failures.length === 0) {
+        iconElem.textContent = "🎉";
+        titleElem.textContent = "MISSION SUCCESS!";
+        titleElem.style.color = "#50e3a4";
+        textElem.textContent = "Congratulations! Your rocket successfully reached target orbit and deployed its payload! / வாழ்த்துகள்! உங்கள் ராக்கெட் வெற்றிகரமாக இலக்கு சுற்றுப்பாதையை அடைந்தது!";
+        listElem.innerHTML = "";
+    } else {
+        iconElem.textContent = "💥";
+        titleElem.textContent = "MISSION FAILED";
+        titleElem.style.color = "#ff6b8a";
+        textElem.textContent = "The mission encountered critical engineering failures: / பயணம் தோல்வியடைந்தது:";
+
+        let html = "<ul style='padding-left:20px;'>";
+        failures.forEach(f => { html += `<li>${f}</li>`; });
+        html += "</ul>";
+        listElem.innerHTML = html;
+    }
+}
+
+function restartMission() {
+    showMission();
+}
 </script>
 
 </body>
