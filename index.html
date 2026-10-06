@@ -2,1183 +2,3909 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>🚀 Space Mission Lab - Mobile Edition</title>
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<title>🚀 Space Mission Lab</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Orbitron:wght@600;800;900&display=swap');
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     -webkit-tap-highlight-color: transparent;
 }
 
+html,
 body {
-    margin: 0;
-    font-family: 'Fredoka', Arial, sans-serif;
-    background: radial-gradient(circle at 50% 20%, #1a1c2e 0%, #0d0f18 60%, #05060a 100%);
-    color: white;
-    min-height: 100vh;
-    overflow-x: hidden;
-    padding-bottom: 20px;
-}
-
-button {
-    font-family: inherit;
-    cursor: pointer;
-}
-
-/* Header */
-.header {
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(13, 15, 24, 0.95);
-    border-bottom: 2px solid #38bdf8;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-}
-
-.logo {
-    font-size: 16px;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 800;
-    color: #ff007f;
-    letter-spacing: 0.5px;
-}
-
-.logo span {
-    color: #38bdf8;
-}
-
-.header-status {
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: #facc15;
-    color: #0f172a;
-    font-size: 11px;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    border: 1px solid #ffffff;
-}
-
-.container {
     width: 100%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 10px;
+    min-height: 100%;
 }
+
+body {
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            #253d78 0%,
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            #47216b 0%,
+            transparent 30%
+        ),
+        #070c1b;
+
+    color: white;
+    overflow-x: hidden;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    width: 100%;
+    max-width: 520px;
+    min-height: 100vh;
+    margin: auto;
+    position: relative;
+}
+
+
+/* =========================================================
+   SCREENS
+========================================================= */
 
 .screen {
     display: none;
+    min-height: 100vh;
+    padding: 14px;
 }
 
 .screen.active {
     display: block;
 }
 
-/* ---------------- MISSION SCREEN ---------------- */
-.mission-card {
-    width: 100%;
-    margin: 15px auto;
-    padding: 20px 15px;
-    text-align: center;
-    background: rgba(22, 27, 46, 0.95);
-    border: 2px solid #38bdf8;
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    height: 58px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.badge {
+    font-size: 11px;
+    font-weight: bold;
+
+    padding: 7px 11px;
+
     border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+
+    background: rgba(255,255,255,.09);
+
+    border: 1px solid rgba(255,255,255,.15);
 }
 
-.mission-icon {
-    font-size: 50px;
-    animation: bounce 2s infinite alternate;
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+    background: rgba(13,21,46,.90);
+
+    border: 1px solid rgba(130,160,255,.18);
+
+    border-radius: 22px;
+
+    padding: 18px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.30);
 }
 
-@keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-8px); }
-}
+.title {
+    text-align: center;
 
-h1 {
-    margin: 10px 0;
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(20px, 5vw, 32px);
-    color: #facc15;
-    text-shadow: 1px 1px 0 #e11d48;
+    font-size: 28px;
+
+    font-weight: 900;
+
+    letter-spacing: .5px;
 }
 
 .subtitle {
-    color: #cbd5e1;
-    font-size: 13px;
-    line-height: 1.4;
-}
+    text-align: center;
 
-.mission-data {
-    margin: 15px 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-}
+    color: #aebce0;
 
-.data-box {
-    padding: 10px 6px;
-    border-radius: 12px;
-    background: #0d0f18;
-    border: 1.5px dashed #38bdf8;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-.data-box strong {
-    display: block;
-    font-size: 15px;
-    color: #4ade80;
-    margin-top: 2px;
-    font-family: 'Orbitron', sans-serif;
-}
-
-.btn {
-    border: 0;
-    border-radius: 14px;
-    padding: 12px 20px;
-    font-weight: 700;
     font-size: 14px;
-    transition: .2s;
-    box-shadow: 0 4px 0px rgba(0,0,0,0.4);
-    width: 100%;
-    max-width: 300px;
+
+    line-height: 1.5;
+
+    margin-top: 8px;
 }
 
-.btn:active {
-    transform: translateY(2px);
-    box-shadow: 0 1px 0px rgba(0,0,0,0.4);
+.tamil {
+    color: #8194c0;
 }
 
-.btn:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
 
-.btn-primary {
-    background: linear-gradient(135deg, #ff007f, #7928ca);
-    color: white;
-    border: 1.5px solid #ffffff;
-}
+/* =========================================================
+   BIG ROCKET
+========================================================= */
 
-.btn-secondary {
-    background: #334155;
-    color: white;
-    border: 1.5px solid #94a3b8;
-}
-
-/* ---------------- CONFIG SCREEN ---------------- */
-.section-title {
-    text-align: center;
-    margin-bottom: 12px;
-}
-
-.section-title h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    color: #facc15;
-    margin: 0 0 4px 0;
-}
-
-.config-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-}
-
-.config-card {
-    background: #161b2e;
-    border: 2px solid #a855f7;
-    padding: 12px;
-    border-radius: 16px;
-}
-
-.config-card label {
-    display: block;
-    font-weight: bold;
-    font-size: 12px;
-    color: #38bdf8;
-    margin-bottom: 6px;
-}
-
-select, input[type="range"] {
-    width: 100%;
-}
-
-select {
-    padding: 8px;
-    border-radius: 8px;
-    background: #0d0f18;
-    color: #facc15;
-    font-size: 13px;
-    font-weight: bold;
-    border: 1.5px solid #a855f7;
-}
-
-.range-value {
-    color: #63d8ff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 4px;
-}
-
-.config-summary {
-    margin: 15px 0;
-    padding: 10px;
-    border-radius: 12px;
-    background: #081024;
-    border: 1.5px solid #202d50;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    text-align: center;
-    font-size: 11px;
-}
-
-.config-summary strong {
-    display: block;
-    color: #63d8ff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
-    margin-top: 2px;
-}
-
-.btn-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-/* ---------------- BUILD SCREEN (MOBILE OPTIMIZED) ---------------- */
-.build-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.panel {
-    background: rgba(22, 27, 46, 0.95);
-    border: 2px solid #38bdf8;
-    border-radius: 16px;
-    padding: 12px;
-}
-
-.panel h3 {
-    margin: 0 0 8px 0;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
-    color: #facc15;
-    text-align: center;
-}
-
-/* Horizontal Scroll Parts Ribbon on Mobile */
-.parts-container {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 6px;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-}
-
-.part-card {
-    flex: 0 0 85px;
-    scroll-snap-align: start;
-    padding: 6px;
-    border-radius: 10px;
-    background: #0d0f18;
-    border: 2px solid #38bdf8;
-    user-select: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    box-shadow: 0 2px 0 #0284c7;
-    touch-action: manipulation;
-}
-
-.part-card.selected {
-    border-color: #facc15;
-    background: #1e293b;
-    box-shadow: 0 0 10px #facc15;
-}
-
-.part-card.used {
-    opacity: 0.2;
-    pointer-events: none;
-    box-shadow: none;
-}
-
-.part-preview-svg {
-    width: 36px;
-    height: 36px;
-    margin-bottom: 2px;
-}
-
-.part-title {
-    font-weight: bold;
-    font-size: 10px;
-    color: #ffffff;
-    line-height: 1.1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-}
-
-.part-desc {
-    font-size: 8px;
-    color: #94a3b8;
-    margin-top: 2px;
-}
-
-/* Assembly Bay */
-.assembly {
-    min-height: 380px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle, #1a233a 0%, #0b101d 100%);
-    border: 2px dashed #4ade80;
-    border-radius: 16px;
-    padding: 10px;
-}
-
-.rocket-assembly-stack {
-    width: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.slot {
-    width: 100%;
-    margin-bottom: 2px;
-    border: 1.5px dashed #64748b;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.03);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 10px;
-    color: #94a3b8;
-    transition: 0.15s;
-    position: relative;
-    text-align: center;
-}
-
-.slot.active-target {
-    border-color: #facc15;
-    background: rgba(250, 204, 21, 0.2);
-}
-
-.slot-nose { height: 42px; border-radius: 35px 35px 4px 4px; }
-.slot-third { height: 36px; }
-.slot-second { height: 38px; }
-.slot-first { height: 48px; }
-.slot-fuel { height: 36px; }
-.slot-guidance { height: 32px; }
-.slot-structure { height: 32px; }
-.slot-engine { height: 36px; }
-.slot-nozzle { height: 32px; border-radius: 4px 4px 10px 10px; }
-
-.placed-part-svg {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.remove-btn {
-    position: absolute;
-    right: -8px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #ff0055;
-    border: 1.5px solid #ffffff;
-    color: white;
-    width: 18px; 
-    height: 18px;
-    border-radius: 50%;
-    font-weight: bold;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-}
-
-@keyframes popIn {
-    0% { transform: scale(0.6); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-/* Telemetry Dashboard */
-.metric {
-    margin-bottom: 8px;
-}
-
-.metric-head {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    margin-bottom: 2px;
-    color: #cbd5e1;
-}
-
-.metric-value {
-    color: #63d8ff;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: bold;
-}
-
-.bar {
-    height: 6px;
-    background: #0d0f18;
-    border-radius: 6px;
-    border: 1px solid #475569;
-    overflow: hidden;
-}
-
-.bar-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #38bdf8, #4ade80);
-    transition: width 0.3s ease;
-}
-
-.status-box {
-    padding: 8px;
-    border-radius: 10px;
-    background: #0d0f18;
-    border: 1.5px solid #475569;
-    text-align: center;
-    font-size: 11px;
-    line-height: 1.3;
-    margin-top: 10px;
-}
-
-.status-box.warn {
-    border-color: #ef476f;
-    color: #ff85a1;
-}
-
-.status-box.good {
-    border-color: #4ade80;
-    color: #4ade80;
-}
-
-.build-actions {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-}
-
-/* ---------------- LAUNCH SCREEN ---------------- */
-.launch-stage {
-    text-align: center;
-    padding: 10px 0;
-}
-
-.launch-pad {
-    height: 380px;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(to top, #020617 0%, #0f172a 70%, #1e1b4b 100%);
-    border-radius: 16px;
-    border: 2px solid #38bdf8;
-}
-
-.launch-rocket-container {
+.big-rocket {
     width: 90px;
+    height: 145px;
+
+    margin: 15px auto 22px;
+
+    position: relative;
+}
+
+.big-nose {
+    width: 62px;
+    height: 65px;
+
     position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: bottom 3.5s cubic-bezier(0.25, 1, 0.5, 1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+    top: 0;
+    left: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef4ff,
+            #687da8
+        );
+
+    clip-path:
+        polygon(
+            50% 0,
+            100% 100%,
+            0 100%
+        );
 }
 
-.launch-rocket-container.fly {
-    bottom: 500px;
+.big-body {
+    position: absolute;
+
+    top: 55px;
+    left: 14px;
+
+    width: 62px;
+    height: 75px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #39496f,
+            #d6dded,
+            #465678
+        );
 }
 
-.rocket-flame {
-    width: 24px;
-    height: 50px;
-    background: linear-gradient(to bottom, #ffffff, #ffbd00, #ff0055, transparent);
-    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 50% 80%, 0% 100%);
-    animation: flame 0.1s infinite alternate;
-    display: none;
+.big-fin-left,
+.big-fin-right {
+    position: absolute;
+
+    width: 22px;
+    height: 45px;
+
+    bottom: 5px;
+
+    background: #42557d;
 }
 
-.rocket-flame.active {
-    display: block;
+.big-fin-left {
+    left: 0;
+
+    clip-path:
+        polygon(
+            100% 0,
+            100% 100%,
+            0 100%
+        );
+}
+
+.big-fin-right {
+    right: 0;
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 100%,
+            0 100%
+        );
+}
+
+.big-flame {
+    position: absolute;
+
+    bottom: -28px;
+    left: 29px;
+
+    width: 32px;
+    height: 38px;
+
+    background:
+        linear-gradient(
+            #fff,
+            #ffbd3d,
+            #ff4d3d
+        );
+
+    clip-path:
+        polygon(
+            50% 100%,
+            0 0,
+            100% 0
+        );
+
+    animation:
+        flame .25s infinite alternate;
 }
 
 @keyframes flame {
-    from { transform: scaleY(0.85); }
-    to { transform: scaleY(1.15); }
+
+    from {
+        transform: scaleY(.8);
+    }
+
+    to {
+        transform: scaleY(1.1);
+    }
+
 }
 
-.count-val {
-    font-size: 45px;
-    font-family: 'Orbitron', sans-serif;
-    color: #facc15;
-    font-weight: bold;
-    text-shadow: 2px 2px 0 #ef476f;
+
+/* =========================================================
+   MISSION DATA
+========================================================= */
+
+.data-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+
+    margin-top: 22px;
 }
 
-/* Result Card */
-.result-card {
-    width: 100%;
-    margin: 15px auto;
-    padding: 20px 15px;
+.data-box {
+    background: rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 14px;
+
+    padding: 12px 7px;
+
     text-align: center;
-    background: #161b2e;
-    border: 3px solid #4ade80;
-    border-radius: 20px;
 }
 
-/* Desktop Enhancements */
-@media(min-width: 768px) {
-    .config-grid { grid-template-columns: repeat(3, 1fr); }
-    .config-summary { grid-template-columns: repeat(4, 1fr); }
-    .build-layout { display: grid; grid-template-columns: 320px 280px 1fr; }
-    .parts-container { display: grid; grid-template-columns: repeat(2, 1fr); overflow-x: visible; }
-    .part-card { flex: auto; }
+.data-box span {
+    display: block;
+
+    color: #8798c0;
+
+    font-size: 10px;
+
+    margin-bottom: 5px;
 }
+
+.data-box strong {
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn {
+    width: 100%;
+
+    min-height: 52px;
+
+    border: 0;
+
+    border-radius: 15px;
+
+    color: white;
+
+    font-weight: 800;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4d6cff,
+            #844cff
+        );
+
+    box-shadow:
+        0 8px 22px
+        rgba(72,91,255,.25);
+}
+
+.btn:active {
+    transform: scale(.97);
+}
+
+.btn.secondary {
+    background: rgba(255,255,255,.08);
+
+    box-shadow: none;
+}
+
+.btn.green {
+    background:
+        linear-gradient(
+            135deg,
+            #00a884,
+            #00cdb0
+        );
+}
+
+.btn.red {
+    background:
+        linear-gradient(
+            135deg,
+            #ff4e5b,
+            #d92f52
+        );
+}
+
+.button-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+}
+
+
+/* =========================================================
+   REQUIREMENTS
+========================================================= */
+
+.requirement {
+    margin-top: 16px;
+
+    padding: 14px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(87,119,255,.08);
+
+    border:
+        1px solid
+        rgba(87,119,255,.17);
+
+    color: #b8c8ee;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+.requirement strong {
+    color: #7e9bff;
+}
+
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+.config-item {
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 15px;
+
+    padding: 14px;
+
+    margin-bottom: 10px;
+}
+
+.config-label {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    font-size: 13px;
+}
+
+.value {
+    color: #7898ff;
+
+    font-weight: bold;
+}
+
+input[type="range"] {
+    width: 100%;
+
+    accent-color: #617cff;
+
+    height: 30px;
+}
+
+select {
+    width: 100%;
+
+    height: 45px;
+
+    background: #111b38;
+
+    color: white;
+
+    border:
+        1px solid
+        #34436e;
+
+    border-radius: 11px;
+
+    padding: 0 12px;
+
+    outline: none;
+}
+
+
+/* =========================================================
+   BUILD HEADER
+========================================================= */
+
+.build-top {
+    margin-bottom: 12px;
+}
+
+.build-title {
+    font-size: 21px;
+
+    font-weight: 900;
+}
+
+.build-sub {
+    color: #8292b8;
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   TELEMETRY
+========================================================= */
+
+.telemetry {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 7px;
+
+    margin-bottom: 12px;
+}
+
+.telemetry-box {
+    padding: 10px 4px;
+
+    text-align: center;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border-radius: 12px;
+}
+
+.telemetry-box small {
+    display: block;
+
+    color: #8190b2;
+
+    font-size: 9px;
+
+    margin-bottom: 5px;
+}
+
+.telemetry-box strong {
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ROCKET BUILD AREA
+========================================================= */
+
+.rocket-card {
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(79,112,190,.10),
+            transparent 40%
+        ),
+        rgba(8,14,31,.9);
+
+    border:
+        1px solid
+        rgba(130,160,255,.15);
+
+    border-radius: 22px;
+
+    padding: 16px 8px 20px;
+
+    min-height: 570px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.grid-lines {
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: .12;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.12)
+            1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.12)
+            1px,
+            transparent 1px
+        );
+
+    background-size: 28px 28px;
+
+    pointer-events: none;
+}
+
+.rocket-builder {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 180px;
+
+    margin: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   ROCKET PARTS
+========================================================= */
+
+.part {
+
+    position: relative;
+
+    width: 105px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: white;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    text-align: center;
+
+    user-select: none;
+
+    transition: .2s;
+}
+
+.part.placed {
+    cursor: pointer;
+}
+
+.part-label {
+
+    position: relative;
+
+    z-index: 5;
+
+    text-shadow:
+        0 1px 3px black;
+}
+
+
+/* =========================================================
+   NOSE
+========================================================= */
+
+.shape-nose {
+
+    height: 70px;
+
+    clip-path:
+        polygon(
+            50% 0%,
+            100% 100%,
+            0% 100%
+        );
+
+    background:
+        linear-gradient(
+            100deg,
+            #657aab,
+            #e8eefb,
+            #657aab
+        );
+
+    color: #17213c;
+}
+
+.shape-nose .part-label {
+
+    color: #15203a;
+
+    text-shadow: none;
+}
+
+
+/* =========================================================
+   STAGES
+========================================================= */
+
+.shape-stage {
+
+    height: 54px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #303e63 0%,
+            #7184ad 28%,
+            #d9e0ed 50%,
+            #7184ad 72%,
+            #303e63 100%
+        );
+
+    border-left:
+        5px solid
+        #9aaed7;
+
+    border-right:
+        5px solid
+        #9aaed7;
+}
+
+
+/* =========================================================
+   FUEL
+========================================================= */
+
+.shape-fuel {
+
+    height: 52px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #4b216c,
+            #b65be1,
+            #5e287d
+        );
+
+    border:
+        2px solid
+        #d68bfa;
+}
+
+
+/* =========================================================
+   GUIDANCE
+========================================================= */
+
+.shape-guidance {
+
+    width: 94px;
+
+    height: 43px;
+
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #07525e,
+            #36c9d5,
+            #07525e
+        );
+
+    border:
+        2px solid
+        #65e8ef;
+}
+
+
+/* =========================================================
+   STRUCTURE
+========================================================= */
+
+.shape-structure {
+
+    height: 45px;
+
+    border-radius: 7px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #66501d 0,
+            #66501d 8px,
+            #c39d4c 8px,
+            #c39d4c 12px
+        );
+
+    border:
+        2px solid
+        #e3bf62;
+}
+
+
+/* =========================================================
+   ENGINE
+========================================================= */
+
+.shape-engine {
+
+    height: 48px;
+
+    border-radius:
+        8px
+        8px
+        15px
+        15px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #3c4354,
+            #d0d6e1,
+            #454c5e
+        );
+
+    color: #172033;
+}
+
+.shape-engine .part-label {
+
+    color: #182033;
+
+    text-shadow: none;
+}
+
+
+/* =========================================================
+   NOZZLE
+========================================================= */
+
+.shape-nozzle {
+
+    width: 74px;
+
+    height: 44px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #222733,
+            #838da1,
+            #222733
+        );
+
+    clip-path:
+        polygon(
+            20% 0,
+            80% 0,
+            100% 100%,
+            0 100%
+        );
+}
+
+
+/* =========================================================
+   FINS
+========================================================= */
+
+.fin-left,
+.fin-right {
+
+    position: absolute;
+
+    width: 28px;
+
+    height: 55px;
+
+    bottom: 0;
+
+    background: #34476f;
+
+    z-index: -1;
+}
+
+.fin-left {
+
+    left: -18px;
+
+    clip-path:
+        polygon(
+            100% 0,
+            100% 100%,
+            0 100%
+        );
+}
+
+.fin-right {
+
+    right: -18px;
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 100%,
+            0 100%
+        );
+}
+
+
+/* =========================================================
+   EMPTY SLOT
+========================================================= */
+
+.empty-slot {
+
+    width: 115px;
+
+    height: 48px;
+
+    border:
+        2px dashed
+        #39496e;
+
+    border-radius: 9px;
+
+    color: #596987;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    background:
+        rgba(255,255,255,.015);
+
+    transition: .2s;
+}
+
+.empty-slot.selected-slot {
+
+    border-color: #718cff;
+
+    background:
+        rgba(85,111,255,.12);
+
+    box-shadow:
+        0 0 15px
+        rgba(85,111,255,.2);
+}
+
+
+/* =========================================================
+   PART TRAY
+========================================================= */
+
+.tray-title {
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    margin: 15px 0 10px;
+}
+
+.part-tray {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 8px;
+}
+
+.part-card {
+
+    min-height: 105px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(255,255,255,.045);
+
+    color: white;
+
+    padding: 7px 4px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.part-card:active {
+
+    transform: scale(.95);
+}
+
+.part-card.selected {
+
+    border-color: #728cff;
+
+    background:
+        rgba(80,106,255,.15);
+
+    box-shadow:
+        0 0 12px
+        rgba(80,106,255,.18);
+}
+
+.mini-part {
+
+    transform: scale(.42);
+
+    transform-origin: center;
+
+    width: 105px;
+
+    height: 45px;
+
+    margin: -15px 0;
+
+    pointer-events: none;
+}
+
+.part-card-name {
+
+    font-size: 9px;
+
+    color: #d5def6;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+
+    margin: 10px 0;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.status.ready {
+
+    color: #5cf0c5;
+
+    background:
+        rgba(0,184,148,.12);
+
+    border:
+        1px solid
+        rgba(0,184,148,.2);
+}
+
+.status.warning {
+
+    color: #ffe29a;
+
+    background:
+        rgba(255,193,7,.10);
+
+    border:
+        1px solid
+        rgba(255,193,7,.16);
+}
+
+.status.danger {
+
+    color: #ff8790;
+
+    background:
+        rgba(255,70,85,.10);
+
+    border:
+        1px solid
+        rgba(255,70,85,.17);
+}
+
+
+/* =========================================================
+   LAUNCH
+========================================================= */
+
+.launch-card {
+
+    min-height: 90vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+.countdown {
+
+    font-size: 80px;
+
+    font-weight: 900;
+
+    margin: 20px;
+
+    color: #8ca7ff;
+}
+
+.launch-rocket {
+
+    font-size: 100px;
+
+    animation:
+        launchShake .08s infinite alternate;
+}
+
+@keyframes launchShake {
+
+    from {
+        transform: translateX(-4px);
+    }
+
+    to {
+        transform: translateX(4px);
+    }
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.result-icon {
+
+    text-align: center;
+
+    font-size: 80px;
+
+    margin: 15px;
+}
+
+.result-title {
+
+    text-align: center;
+
+    font-size: 28px;
+
+    font-weight: 900;
+}
+
+.result-message {
+
+    color: #aebcdf;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    margin:
+        10px
+        0
+        20px;
+}
+
+.result-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 8px;
+}
+
+.result-box {
+
+    background:
+        rgba(255,255,255,.05);
+
+    border-radius: 13px;
+
+    padding: 13px 5px;
+
+    text-align: center;
+}
+
+.result-box small {
+
+    display: block;
+
+    color: #8290b1;
+
+    font-size: 9px;
+
+    margin-bottom: 5px;
+}
+
+.result-box strong {
+
+    font-size: 14px;
+}
+
+.failures {
+
+    margin: 15px 0;
+
+    padding: 14px;
+
+    background:
+        rgba(255,70,85,.08);
+
+    border:
+        1px solid
+        rgba(255,70,85,.15);
+
+    border-radius: 14px;
+
+    color: #ffb0b6;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media(max-width:360px) {
+
+    .screen {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
+    .part-tray {
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .rocket-builder {
+        transform: scale(.90);
+    }
+
+    .data-box strong {
+        font-size: 14px;
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<header class="header">
-    <div class="logo">🚀 <span>SPACE LAB</span></div>
-    <div class="header-status">MISSION 01</div>
-</header>
+<div class="app">
 
-<div class="container">
 
-    <!-- ================= MISSION SCREEN ================= -->
-    <section id="missionScreen" class="screen active">
-        <div class="mission-card">
-            <div class="mission-icon">🚀</div>
-            <h1>ORBITAL LAUNCH<br><span style="font-size:15px; color:#38bdf8">விண்வெளிப் பயணம்</span></h1>
-            <p class="subtitle">
-                Assemble and configure a rocket for a successful orbital insertion.
-            </p>
-            
-            <div class="mission-data">
-                <div class="data-box">PAYLOAD / சுமை<strong>500 kg</strong></div>
-                <div class="data-box">TARGET / இலக்கு<strong>LEO ORBIT</strong></div>
-                <div class="data-box">REQ Δv / தேவ Δv<strong>5.50 km/s</strong></div>
-                <div class="data-box">MAX MASS / எடை<strong>70,000 kg</strong></div>
+<!-- =====================================================
+     MISSION SCREEN
+===================================================== -->
+
+<section
+    id="missionScreen"
+    class="screen active">
+
+    <div class="header">
+
+        <div class="logo">
+            🚀 SPACE LAB
+        </div>
+
+        <div class="badge">
+            MISSION 01
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="big-rocket">
+
+            <div class="big-nose"></div>
+
+            <div class="big-body"></div>
+
+            <div class="big-fin-left"></div>
+
+            <div class="big-fin-right"></div>
+
+            <div class="big-flame"></div>
+
+        </div>
+
+
+        <div class="title">
+            ROCKET MISSION
+        </div>
+
+
+        <div class="subtitle">
+
+            Build a rocket capable of reaching
+            Low Earth Orbit.
+
+            <br><br>
+
+            <span class="tamil">
+
+                குறைந்த பூமி சுற்றுப்பாதையை
+                அடையும் ராக்கெட்டை உருவாக்கவும்.
+
+            </span>
+
+        </div>
+
+
+        <div class="data-grid">
+
+            <div class="data-box">
+
+                <span>
+                    PAYLOAD / சுமை
+                </span>
+
+                <strong>
+                    500 kg
+                </strong>
+
             </div>
 
-            <button class="btn btn-primary" onclick="showConfig()">
-                START MISSION / தொடங்கு 🚀
+
+            <div class="data-box">
+
+                <span>
+                    TARGET / இலக்கு
+                </span>
+
+                <strong>
+                    LEO
+                </strong>
+
+            </div>
+
+
+            <div class="data-box">
+
+                <span>
+                    REQUIRED Δv
+                </span>
+
+                <strong>
+                    4.00 km/s
+                </strong>
+
+            </div>
+
+
+            <div class="data-box">
+
+                <span>
+                    MAX MASS
+                </span>
+
+                <strong>
+                    90,000 kg
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="requirement">
+
+            <strong>
+                🎯 MISSION CONDITIONS
+            </strong>
+
+            <br>
+
+            Payload = <strong>500 kg</strong>
+            <br>
+
+            Stages = <strong>3</strong>
+            <br>
+
+            Fuel = <strong>50,000 kg</strong>
+            <br>
+
+            Engine = <strong>B</strong>
+            <br>
+
+            Guidance = <strong>Advanced</strong>
+            <br>
+
+            Structure = <strong>Standard</strong>
+            <br>
+
+            T/W ≥ <strong>1.20</strong>
+            <br>
+
+            Δv ≥ <strong>4.00 km/s</strong>
+            <br>
+
+            Mass ≤ <strong>90,000 kg</strong>
+
+        </div>
+
+
+        <br>
+
+
+        <button
+            class="btn"
+            onclick="goConfig()">
+
+            START MISSION 🚀
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CONFIG SCREEN
+===================================================== -->
+
+<section
+    id="configScreen"
+    class="screen">
+
+    <div class="header">
+
+        <div class="logo">
+            ⚙️ CONFIG
+        </div>
+
+        <div class="badge">
+            STEP 1
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="title">
+            Configure Rocket
+        </div>
+
+
+        <div class="subtitle">
+
+            Decide your rocket configuration.
+
+            <br>
+
+            <span class="tamil">
+
+                ராக்கெட்டின் அமைப்பை
+                தேர்வு செய்யவும்.
+
+            </span>
+
+        </div>
+
+
+        <!-- PAYLOAD -->
+
+        <div class="config-item">
+
+            <div class="config-label">
+
+                <span>
+                    Payload / சுமை
+                </span>
+
+                <span
+                    class="value"
+                    id="payloadValue">
+
+                    500 kg
+
+                </span>
+
+            </div>
+
+
+            <input
+                id="payload"
+                type="range"
+                min="300"
+                max="1000"
+                step="100"
+                value="500"
+                oninput="updateConfig()">
+
+        </div>
+
+
+        <!-- STAGES -->
+
+        <div class="config-item">
+
+            <div class="config-label">
+
+                <span>
+                    Stages / நிலைகள்
+                </span>
+
+                <span
+                    class="value"
+                    id="stagesValue">
+
+                    3
+
+                </span>
+
+            </div>
+
+
+            <input
+                id="stages"
+                type="range"
+                min="1"
+                max="3"
+                step="1"
+                value="3"
+                oninput="updateConfig()">
+
+        </div>
+
+
+        <!-- FUEL -->
+
+        <div class="config-item">
+
+            <div class="config-label">
+
+                <span>
+                    Fuel / எரிபொருள்
+                </span>
+
+                <span
+                    class="value"
+                    id="fuelValue">
+
+                    50,000 kg
+
+                </span>
+
+            </div>
+
+
+            <input
+                id="fuel"
+                type="range"
+                min="20000"
+                max="60000"
+                step="5000"
+                value="50000"
+                oninput="updateConfig()">
+
+        </div>
+
+
+        <!-- ENGINE -->
+
+        <div class="config-item">
+
+            <div class="config-label">
+
+                <span>
+                    Engine / இயந்திரம்
+                </span>
+
+            </div>
+
+
+            <select id="engine">
+
+                <option value="A">
+                    Engine A — 600 kN
+                </option>
+
+                <option value="B">
+                    Engine B — 900 kN
+                </option>
+
+                <option value="C">
+                    Engine C — 1200 kN
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- GUIDANCE -->
+
+        <div class="config-item">
+
+            <div class="config-label">
+
+                <span>
+                    Guidance / வழிகாட்டுதல்
+                </span>
+
+            </div>
+
+
+            <select id="guidance">
+
+                <option value="standard">
+                    Standard
+                </option>
+
+                <option value="advanced">
+                    Advanced
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- STRUCTURE -->
+
+        <div class="config-item">
+
+            <div class="config-label">
+
+                <span>
+                    Structure / கட்டமைப்பு
+                </span>
+
+            </div>
+
+
+            <select id="structure">
+
+                <option value="light">
+                    Lightweight
+                </option>
+
+                <option value="standard">
+                    Standard
+                </option>
+
+                <option value="heavy">
+                    Heavy
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="requirement">
+
+            <strong>
+                💡 MISSION TARGET
+            </strong>
+
+            <br>
+
+            The correct configuration is not shown
+            automatically.
+
+            <br>
+
+            Find the combination that satisfies
+            the mission requirements.
+
+        </div>
+
+
+        <br>
+
+
+        <div class="button-row">
+
+            <button
+                class="btn secondary"
+                onclick="showScreen('missionScreen')">
+
+                ← BACK
+
             </button>
-        </div>
-    </section>
 
-    <!-- ================= CONFIG SCREEN ================= -->
-    <section id="configScreen" class="screen">
-        <div class="section-title">
-            <h2>CONFIGURATION / அமைப்பு</h2>
-        </div>
 
-        <div class="config-grid">
-            <div class="config-card">
-                <label>PAYLOAD / சுமை</label>
-                <div class="range-value"><span id="payloadValue">500</span> kg</div>
-                <input type="range" id="payload" min="100" max="1000" step="100" value="500" oninput="updateConfig()">
-            </div>
+            <button
+                class="btn"
+                onclick="startBuild()">
 
-            <div class="config-card">
-                <label>STAGES / நிலைகள்</label>
-                <select id="stages" onchange="updateConfig()">
-                    <option value="1">1 STAGE / 1 நிலை</option>
-                    <option value="2">2 STAGES / 2 நிலைகள்</option>
-                    <option value="3" selected>3 STAGES / 3 நிலைகள்</option>
-                </select>
-            </div>
+                BUILD 🔧
 
-            <div class="config-card">
-                <label>FUEL CAPACITY / எரிபொருள்</label>
-                <select id="fuel" onchange="updateConfig()">
-                    <option value="15000">15,000 kg</option>
-                    <option value="30000">30,000 kg</option>
-                    <option value="50000" selected>50,000 kg</option>
-                </select>
-            </div>
-
-            <div class="config-card">
-                <label>ENGINE / இயந்திரம்</label>
-                <select id="engine" onchange="updateConfig()">
-                    <option value="A">ENGINE A — 600 kN</option>
-                    <option value="B" selected>ENGINE B — 900 kN</option>
-                    <option value="C">ENGINE C — 1200 kN</option>
-                </select>
-            </div>
-
-            <div class="config-card">
-                <label>GUIDANCE / வழிகாட்டி</label>
-                <select id="guidance" onchange="updateConfig()">
-                    <option value="standard">STANDARD / நிலையான</option>
-                    <option value="advanced" selected>ADVANCED / மேம்பட்ட</option>
-                </select>
-            </div>
-
-            <div class="config-card">
-                <label>STRUCTURE / கட்டமைப்பு</label>
-                <select id="structure" onchange="updateConfig()">
-                    <option value="light">LIGHTWEIGHT / இலகுரக</option>
-                    <option value="standard" selected>STANDARD / நிலையான</option>
-                    <option value="heavy">HEAVY / கனமான</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="config-summary">
-            <div>PAYLOAD <strong id="sumPayload">500 kg</strong></div>
-            <div>FUEL <strong id="sumFuel">50,000 kg</strong></div>
-            <div>STAGES <strong id="sumStages">3</strong></div>
-            <div>ENGINE <strong id="sumEngine">B</strong></div>
-        </div>
-
-        <div class="btn-group">
-            <button class="btn btn-secondary" style="width:45%" onclick="showMission()">← BACK</button>
-            <button class="btn btn-primary" style="width:50%" onclick="startBuild()">BUILD ROCKET 🚀</button>
-        </div>
-    </section>
-
-    <!-- ================= BUILD SCREEN ================= -->
-    <section id="buildScreen" class="screen">
-        <div class="section-title">
-            <h2>BUILD ROCKET / உருவாக்கு</h2>
-            <p style="font-size:12px; color:#94a3b8; margin:0;">Tap a part below, then tap its target slot.</p>
-        </div>
-
-        <div class="build-layout">
-            
-            <!-- HORIZONTAL/GRID PARTS PALETTE -->
-            <div class="panel">
-                <h3>🧩 PARTS (தட்டவும்)</h3>
-                <div class="parts-container" id="partsContainer"></div>
-            </div>
-
-            <!-- ASSEMBLY BAY -->
-            <div class="panel assembly">
-                <div class="rocket-assembly-stack" id="rocketAssemblyStack">
-                    <div class="slot slot-nose" data-slot="nose">🔺 NOSE CONE</div>
-                    <div class="slot slot-third" data-slot="third">🟡 STAGE 3</div>
-                    <div class="slot slot-second" data-slot="second">🟢 STAGE 2</div>
-                    <div class="slot slot-first" data-slot="first">🔵 STAGE 1</div>
-                    <div class="slot slot-fuel" data-slot="fuel">🛢️ FUEL TANK</div>
-                    <div class="slot slot-guidance" data-slot="guidance">🧭 GUIDANCE</div>
-                    <div class="slot slot-structure" data-slot="structure">⚙️ STRUCTURE</div>
-                    <div class="slot slot-engine" data-slot="engine">🔥 ENGINE</div>
-                    <div class="slot slot-nozzle" data-slot="nozzle">🔻 NOZZLE</div>
-                </div>
-            </div>
-
-            <!-- TELEMETRY -->
-            <div class="panel">
-                <h3>📡 TELEMETRY / அளவியல்</h3>
-                
-                <div class="metric">
-                    <div class="metric-head"><span>MASS</span><span class="metric-value" id="massMetric">0 kg</span></div>
-                    <div class="bar"><div class="bar-fill" id="massBar"></div></div>
-                </div>
-
-                <div class="metric">
-                    <div class="metric-head"><span>THRUST</span><span class="metric-value" id="thrustMetric">0 kN</span></div>
-                    <div class="bar"><div class="bar-fill" id="thrustBar"></div></div>
-                </div>
-
-                <div class="metric">
-                    <div class="metric-head"><span>T/W RATIO</span><span class="metric-value" id="twMetric">0.00</span></div>
-                    <div class="bar"><div class="bar-fill" id="twBar"></div></div>
-                </div>
-
-                <div class="metric">
-                    <div class="metric-head"><span>Δv</span><span class="metric-value" id="dvMetric">0.00 km/s</span></div>
-                    <div class="bar"><div class="bar-fill" id="dvBar"></div></div>
-                </div>
-
-                <div class="metric">
-                    <div class="metric-head"><span>STABILITY</span><span class="metric-value" id="stabilityMetric">0%</span></div>
-                    <div class="bar"><div class="bar-fill" id="stabilityBar"></div></div>
-                </div>
-
-                <div class="status-box" id="missionFit">
-                    <b>MISSION FIT</b><br>Assemble all parts...
-                </div>
-            </div>
-
-            <!-- ACTIONS -->
-            <div class="build-actions">
-                <button class="btn btn-secondary" style="width:40%" onclick="resetBuild()">RESET</button>
-                <button class="btn btn-primary" style="width:55%" id="testButton" onclick="testRocket()" disabled>LAUNCH 🚀</button>
-            </div>
+            </button>
 
         </div>
-    </section>
 
-    <!-- ================= LAUNCH SCREEN ================= -->
-    <section id="launchScreen" class="screen">
-        <div class="launch-stage">
-            <h2 style="font-size:20px; font-family:'Orbitron', sans-serif; color:#facc15;" id="launchStatus">CHECKING...</h2>
-            <div class="count-val" id="countNumber">3</div>
+    </div>
 
-            <div class="launch-pad">
-                <div class="launch-rocket-container" id="launchRocket">
-                    <div id="fullRocketVisual"></div>
-                    <div class="rocket-flame" id="launchFlame"></div>
-                </div>
+</section>
+
+
+
+<!-- =====================================================
+     BUILD SCREEN
+===================================================== -->
+
+<section
+    id="buildScreen"
+    class="screen">
+
+    <div class="header">
+
+        <div class="logo">
+            🔧 BUILD
+        </div>
+
+        <div class="badge">
+            STEP 2
+        </div>
+
+    </div>
+
+
+    <div class="build-top">
+
+        <div class="build-title">
+            Assemble Your Rocket
+        </div>
+
+        <div class="build-sub">
+
+            Tap a component, then tap its
+            matching slot.
+
+        </div>
+
+    </div>
+
+
+    <!-- TELEMETRY -->
+
+    <div class="telemetry">
+
+        <div class="telemetry-box">
+
+            <small>
+                MASS
+            </small>
+
+            <strong id="massValue">
+                0 kg
+            </strong>
+
+        </div>
+
+
+        <div class="telemetry-box">
+
+            <small>
+                T / W
+            </small>
+
+            <strong id="twValue">
+                0.00
+            </strong>
+
+        </div>
+
+
+        <div class="telemetry-box">
+
+            <small>
+                Δv
+            </small>
+
+            <strong id="dvValue">
+                0.00
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- ROCKET -->
+
+    <div class="rocket-card">
+
+        <div class="grid-lines"></div>
+
+
+        <div
+            class="rocket-builder"
+            id="rocketBuilder">
+
+        </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div
+        id="status"
+        class="status warning">
+
+        Start assembling your rocket.
+
+    </div>
+
+
+    <!-- PART TRAY -->
+
+    <div class="card">
+
+        <div class="tray-title">
+
+            🧩 Rocket Components
+
+        </div>
+
+
+        <div
+            class="part-tray"
+            id="partTray">
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="button-row">
+
+        <button
+            class="btn secondary"
+            onclick="resetAssembly()">
+
+            RESET
+
+        </button>
+
+
+        <button
+            class="btn green"
+            onclick="launch()">
+
+            🚀 LAUNCH
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     LAUNCH SCREEN
+===================================================== -->
+
+<section
+    id="launchScreen"
+    class="screen">
+
+    <div class="card launch-card">
+
+        <div class="logo">
+            🚀 LAUNCH SEQUENCE
+        </div>
+
+
+        <div
+            id="countdown"
+            class="countdown">
+
+            5
+
+        </div>
+
+
+        <div class="launch-rocket">
+            🚀
+        </div>
+
+
+        <p
+            id="launchText"
+            style="
+                color:#9caed4;
+                text-align:center;
+                margin-top:20px;
+            ">
+
+            Preparing launch...
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RESULT SCREEN
+===================================================== -->
+
+<section
+    id="resultScreen"
+    class="screen">
+
+    <div class="card">
+
+        <div
+            id="resultIcon"
+            class="result-icon">
+
+            🚀
+
+        </div>
+
+
+        <div
+            id="resultTitle"
+            class="result-title">
+
+            MISSION RESULT
+
+        </div>
+
+
+        <div
+            id="resultMessage"
+            class="result-message">
+
+        </div>
+
+
+        <div class="result-grid">
+
+            <div class="result-box">
+
+                <small>
+                    PAYLOAD
+                </small>
+
+                <strong id="rPayload">
+                    -
+                </strong>
+
             </div>
-        </div>
-    </section>
 
-    <!-- ================= RESULT SCREEN ================= -->
-    <section id="resultScreen" class="screen">
-        <div class="result-card">
-            <div style="font-size:50px" id="resultIcon">🎉</div>
-            <h1 style="color:#4ade80" id="resultTitle">RESULT</h1>
-            <p style="font-size:13px; color:#cbd5e1;" id="resultText"></p>
-            <div id="failureList" style="text-align:left; color:#ff85a1; margin:15px 0; font-size:12px;"></div>
-            <button class="btn btn-primary" onclick="restartMission()">RETRY 🔄</button>
+
+            <div class="result-box">
+
+                <small>
+                    MASS
+                </small>
+
+                <strong id="rMass">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <small>
+                    T / W
+                </small>
+
+                <strong id="rTW">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <small>
+                    Δv
+                </small>
+
+                <strong id="rDV">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <small>
+                    STAGES
+                </small>
+
+                <strong id="rStages">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <small>
+                    STATUS
+                </small>
+
+                <strong id="rStatus">
+                    -
+                </strong>
+
+            </div>
+
         </div>
-    </section>
+
+
+        <div
+            id="failures"
+            class="failures"
+            style="display:none;">
+
+        </div>
+
+
+        <br>
+
+
+        <button
+            class="btn"
+            onclick="restart()">
+
+            🔄 TRY AGAIN
+
+        </button>
+
+    </div>
+
+</section>
+
 
 </div>
 
+
 <script>
-const mission = {
-    payload: 500, minTW: 1.20, minDV: 4, maxMass: 70000,
-    requiredGuidance: "advanced", requiredEngine: "B", requiredFuel: 50000, requiredStructure: "standard"
+
+/* =========================================================
+   FIXED MISSION CONDITIONS
+========================================================= */
+
+const MISSION = {
+
+    payload: 500,
+
+    stages: 3,
+
+    fuel: 50000,
+
+    engine: "B",
+
+    guidance: "advanced",
+
+    structure: "standard",
+
+    minTW: 1.20,
+
+    minDV: 4.00,
+
+    maxMass: 90000
+
 };
 
-const engines = {
-    A: { thrust: 600, isp: 300, mass: 4000 },
-    B: { thrust: 900, isp: 330, mass: 5500 },
-    C: { thrust: 1200, isp: 350, mass: 8000 }
-};
 
-const guidanceData = {
-    standard: { mass: 150, quality: 65 },
-    advanced: { mass: 300, quality: 95 }
-};
+/* =========================================================
+   ENGINE DATA
+========================================================= */
 
-const structureData = {
-    light: { mass: 2000, quality: 70 },
-    standard: { mass: 3500, quality: 90 },
-    heavy: { mass: 6000, quality: 80 }
-};
+const ENGINES = {
 
-const partMasses = {
-    nose: 500, third: 2000, second: 4000, first: 8000,
-    fuel: 0, guidance: 0, structure: 0, engine: 0, nozzle: 800
-};
+    A: {
+        thrust: 600,
+        isp: 300,
+        mass: 4000
+    },
 
-const rocketSVGParts = {
-    nose: `<svg viewBox="0 0 180 90" preserveAspectRatio="none" style="width:100%;height:100%;"><path d="M 90,5 C 130,35 160,65 160,90 L 20,90 C 20,65 50,35 90,5 Z" fill="url(#noseGrad)" stroke="#cbd5e1" stroke-width="2"/><defs><linearGradient id="noseGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#dc2626"/><stop offset="50%" stop-color="#ef476f"/><stop offset="100%" stop-color="#991b1b"/></linearGradient></defs></svg>`,
-    third: `<svg viewBox="0 0 180 70" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="20" y="0" width="140" height="70" rx="3" fill="url(#thirdGrad)" stroke="#cbd5e1" stroke-width="2"/><circle cx="90" cy="18" r="7" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/><defs><linearGradient id="thirdGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0284c7"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient></defs></svg>`,
-    second: `<svg viewBox="0 0 180 85" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="18" y="0" width="144" height="85" rx="3" fill="url(#secondGrad)" stroke="#cbd5e1" stroke-width="2"/><text x="90" y="48" font-family="Orbitron, sans-serif" font-size="12" fill="#ffffff" font-weight="bold" text-anchor="middle">STAGE 2</text><defs><linearGradient id="secondGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#15803d"/><stop offset="50%" stop-color="#22c55e"/><stop offset="100%" stop-color="#166534"/></linearGradient></defs></svg>`,
-    first: `<svg viewBox="0 0 180 110" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="15" y="0" width="150" height="110" rx="3" fill="url(#firstGrad)" stroke="#cbd5e1" stroke-width="2"/><path d="M 15,40 L 0,105 L 15,105 Z" fill="#b91c1c"/><path d="M 165,40 L 180,105 L 165,105 Z" fill="#b91c1c"/><defs><linearGradient id="firstGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#d97706"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#b45309"/></linearGradient></defs></svg>`,
-    fuel: `<svg viewBox="0 0 180 70" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="25" y="0" width="130" height="70" rx="6" fill="#475569" stroke="#94a3b8" stroke-width="2"/><text x="90" y="40" font-family="Orbitron, sans-serif" font-size="12" fill="#facc15" text-anchor="middle">PROPELLANT</text></svg>`,
-    guidance: `<svg viewBox="0 0 180 50" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="30" y="0" width="120" height="50" rx="4" fill="#a855f7" stroke="#ffffff" stroke-width="2"/><text x="90" y="30" font-family="Orbitron, sans-serif" font-size="11" fill="#ffffff" text-anchor="middle">NAV / GUIDANCE</text></svg>`,
-    structure: `<svg viewBox="0 0 180 50" preserveAspectRatio="none" style="width:100%;height:100%;"><rect x="20" y="0" width="140" height="50" rx="2" fill="#334155" stroke="#64748b" stroke-width="2"/><line x1="20" y1="25" x2="160" y2="25" stroke="#94a3b8" stroke-dasharray="4"/></svg>`,
-    engine: `<svg viewBox="0 0 180 60" preserveAspectRatio="none" style="width:100%;height:100%;"><path d="M 45,0 L 135,0 L 150,60 L 30,60 Z" fill="#e11d48" stroke="#ffffff" stroke-width="2"/><text x="90" y="35" font-family="Orbitron, sans-serif" font-size="11" fill="#ffffff" text-anchor="middle">MAIN ENGINE</text></svg>`,
-    nozzle: `<svg viewBox="0 0 180 60" preserveAspectRatio="none" style="width:100%;height:100%;"><path d="M 40,0 L 140,0 L 155,50 L 25,50 Z" fill="#1e293b" stroke="#cbd5e1" stroke-width="2"/><rect x="60" y="50" width="60" height="10" fill="#000000"/></svg>`
-};
+    B: {
+        thrust: 900,
+        isp: 330,
+        mass: 5500
+    },
 
-const defaultPartsList = [
-    { type: 'nose', title: 'Nose Cone', desc: 'முனை கூம்பு' },
-    { type: 'third', title: 'Stage 3', desc: 'மூன்றாம் நிலை' },
-    { type: 'second', title: 'Stage 2', desc: 'இரண்டாம் நிலை' },
-    { type: 'first', title: 'Stage 1', desc: 'முதல் நிலை' },
-    { type: 'fuel', title: 'Fuel Tank', desc: 'எரிபொருள்' },
-    { type: 'guidance', title: 'Guidance', desc: 'வழிகாட்டி' },
-    { type: 'structure', title: 'Structure', desc: 'கட்டமைப்பு' },
-    { type: 'engine', title: 'Engine', desc: 'இயந்திரம்' },
-    { type: 'nozzle', title: 'Nozzle', desc: 'முனை' }
-];
-
-let configuration = { payload: 500, stages: 3, fuel: 50000, engine: "B", guidance: "advanced", structure: "standard" };
-let placed = {}; 
-let selectedPartType = null;
-
-function showScreen(id) {
-    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function showMission() { showScreen("missionScreen"); }
-function showConfig() { showScreen("configScreen"); }
-
-function updateConfig() {
-    configuration.payload = parseInt(document.getElementById("payload").value);
-    configuration.stages = parseInt(document.getElementById("stages").value);
-    configuration.fuel = parseInt(document.getElementById("fuel").value);
-    configuration.engine = document.getElementById("engine").value;
-    configuration.guidance = document.getElementById("guidance").value;
-    configuration.structure = document.getElementById("structure").value;
-
-    document.getElementById("payloadValue").textContent = configuration.payload;
-    document.getElementById("sumPayload").textContent = configuration.payload + " kg";
-    document.getElementById("sumFuel").textContent = configuration.fuel.toLocaleString() + " kg";
-    document.getElementById("sumStages").textContent = configuration.stages;
-    document.getElementById("sumEngine").textContent = configuration.engine;
-
-    renderAssemblySlots();
-}
-
-function renderAssemblySlots() {
-    const slots = document.querySelectorAll(".slot");
-    slots.forEach(slot => {
-        const type = slot.dataset.slot;
-        if (type === "second" && configuration.stages < 2) {
-            slot.style.display = "none";
-        } else if (type === "third" && configuration.stages < 3) {
-            slot.style.display = "none";
-        } else {
-            slot.style.display = "flex";
-        }
-    });
-}
-
-function startBuild() {
-    resetBuild();
-    showScreen("buildScreen");
-    renderShuffledParts();
-    setupTouchAndClickControls();
-}
-
-function shuffleArray(array) {
-    let arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-}
-
-function renderShuffledParts() {
-    const container = document.getElementById("partsContainer");
-    container.innerHTML = "";
-    
-    let activeParts = defaultPartsList.filter(p => {
-        if (p.type === "second" && configuration.stages < 2) return false;
-        if (p.type === "third" && configuration.stages < 3) return false;
-        return true;
-    });
-
-    const shuffled = shuffleArray(activeParts);
-    shuffled.forEach(part => {
-        const card = document.createElement("div");
-        card.className = "part-card";
-        card.dataset.type = part.type;
-
-        card.innerHTML = `
-            <div class="part-preview-svg">${rocketSVGParts[part.type]}</div>
-            <div class="part-title">${part.title}</div>
-            <div class="part-desc">${part.desc}</div>
-        `;
-        container.appendChild(card);
-    });
-}
-
-function setupTouchAndClickControls() {
-    const parts = document.querySelectorAll(".part-card");
-    const slots = document.querySelectorAll(".slot");
-
-    parts.forEach(part => {
-        part.addEventListener("click", () => {
-            parts.forEach(p => p.classList.remove("selected"));
-            if (selectedPartType === part.dataset.type) {
-                selectedPartType = null;
-            } else {
-                selectedPartType = part.dataset.type;
-                part.classList.add("selected");
-            }
-            highlightSlots();
-        });
-    });
-
-    slots.forEach(slot => {
-        slot.addEventListener("click", () => {
-            const slotType = slot.dataset.slot;
-            if (selectedPartType) {
-                placePart(slot, slotType, selectedPartType);
-                selectedPartType = null;
-                parts.forEach(p => p.classList.remove("selected"));
-                highlightSlots();
-            }
-        });
-    });
-}
-
-function highlightSlots() {
-    document.querySelectorAll(".slot").forEach(s => {
-        if (selectedPartType && !placed[s.dataset.slot]) {
-            s.classList.add("active-target");
-        } else {
-            s.classList.remove("active-target");
-        }
-    });
-}
-
-function placePart(slot, slotType, draggedType) {
-    if (placed[slotType]) return;
-
-    placed[slotType] = draggedType;
-
-    const partElem = document.querySelector(`.part-card[data-type="${draggedType}"]`);
-    if (partElem) partElem.classList.add("used");
-
-    slot.innerHTML = `
-        <div class="placed-part-svg">
-            ${rocketSVGParts[draggedType]}
-            <button class="remove-btn" onclick="removePart('${slotType}', event)">×</button>
-        </div>
-    `;
-
-    updateTelemetry();
-}
-
-function removePart(slotType, event) {
-    if (event) event.stopPropagation();
-
-    const draggedType = placed[slotType];
-    delete placed[slotType];
-
-    if (draggedType) {
-        const partElem = document.querySelector(`.part-card[data-type="${draggedType}"]`);
-        if (partElem) partElem.classList.remove("used");
+    C: {
+        thrust: 1200,
+        isp: 350,
+        mass: 8000
     }
 
-    const slot = document.querySelector(`.slot[data-slot="${slotType}"]`);
-    if (slot) {
-        let labels = {
-            nose: "🔺 NOSE CONE", third: "🟡 STAGE 3", second: "🟢 STAGE 2",
-            first: "🔵 STAGE 1", fuel: "🛢️ FUEL TANK", guidance: "🧭 GUIDANCE",
-            structure: "⚙️ STRUCTURE", engine: "🔥 ENGINE", nozzle: "🔻 NOZZLE"
-        };
-        slot.innerHTML = labels[slotType];
-    }
+};
 
-    updateTelemetry();
+
+/* =========================================================
+   GUIDANCE DATA
+========================================================= */
+
+const GUIDANCE = {
+
+    standard: 150,
+
+    advanced: 300
+
+};
+
+
+/* =========================================================
+   STRUCTURE DATA
+========================================================= */
+
+const STRUCTURE = {
+
+    light: 2000,
+
+    standard: 3500,
+
+    heavy: 6000
+
+};
+
+
+/* =========================================================
+   PHYSICAL PART MASSES
+========================================================= */
+
+const PART_MASS = {
+
+    nose: 500,
+
+    third: 2000,
+
+    second: 4000,
+
+    first: 8000,
+
+    nozzle: 800
+
+};
+
+
+/* =========================================================
+   RANDOM CONFIGURATION
+========================================================= */
+
+function randomChoice(array) {
+
+    return array[
+        Math.floor(
+            Math.random() * array.length
+        )
+    ];
+
 }
 
-function resetBuild() {
-    placed = {};
-    selectedPartType = null;
-    document.querySelectorAll(".part-card").forEach(p => p.classList.remove("used", "selected"));
-    renderAssemblySlots();
 
-    document.querySelectorAll(".slot").forEach(slot => {
-        removePart(slot.dataset.slot, null);
-    });
+function generateRandomConfig() {
 
-    updateTelemetry();
-}
+    const payloads = [
 
-function calculateMetrics() {
-    let activeSlots = ["nose", "first", "fuel", "guidance", "structure", "engine", "nozzle"];
-    if (configuration.stages >= 2) activeSlots.push("second");
-    if (configuration.stages >= 3) activeSlots.push("third");
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000
 
-    let placedCount = 0;
-    let isCorrectArrangement = true;
+    ];
 
-    activeSlots.forEach(s => {
-        if (placed[s]) placedCount++;
-        if (placed[s] !== s) isCorrectArrangement = false;
-    });
 
-    let totalSlots = activeSlots.length;
-    let isFullyAssembled = (placedCount === totalSlots);
+    const stages = [
 
-    let currentMass = configuration.payload + configuration.fuel + 
-                      engines[configuration.engine].mass + 
-                      guidanceData[configuration.guidance].mass + 
-                      structureData[configuration.structure].mass;
+        1,
+        2,
+        3
 
-    activeSlots.forEach(s => {
-        if (placed[s] && partMasses[placed[s]]) {
-            currentMass += partMasses[placed[s]];
-        }
-    });
+    ];
 
-    let currentThrust = placed["engine"] === "engine" ? engines[configuration.engine].thrust : 0;
-    let weight = (currentMass * 9.81) / 1000;
-    let twRatio = weight > 0 ? (currentThrust / weight) : 0;
 
-    let isp = engines[configuration.engine].isp;
-    let dryMass = currentMass - configuration.fuel;
-    let dv = 0;
-    if (dryMass > 0 && currentMass > dryMass && placed["engine"] === "engine" && placed["fuel"] === "fuel") {
-        dv = (isp * 9.81 * Math.log(currentMass / dryMass)) / 1000;
-    }
+    const fuels = [
 
-    let stability = Math.round((placedCount / totalSlots) * 100);
+        20000,
+        25000,
+        30000,
+        35000,
+        40000,
+        45000,
+        50000,
+        55000,
+        60000
+
+    ];
+
+
+    const engines = [
+
+        "A",
+        "B",
+        "C"
+
+    ];
+
+
+    const guidance = [
+
+        "standard",
+        "advanced"
+
+    ];
+
+
+    const structures = [
+
+        "light",
+        "standard",
+        "heavy"
+
+    ];
+
 
     return {
-        mass: currentMass, thrust: currentThrust, twRatio: twRatio, dv: dv,
-        stability: stability, isFullyAssembled: isFullyAssembled, isCorrectArrangement: isCorrectArrangement
+
+        payload:
+            randomChoice(payloads),
+
+        stages:
+            randomChoice(stages),
+
+        fuel:
+            randomChoice(fuels),
+
+        engine:
+            randomChoice(engines),
+
+        guidance:
+            randomChoice(guidance),
+
+        structure:
+            randomChoice(structures)
+
     };
+
 }
+
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+let config =
+    generateRandomConfig();
+
+
+/* =========================================================
+   ASSEMBLY
+========================================================= */
+
+let assembly = {};
+
+let selectedPart = null;
+
+
+/* =========================================================
+   SCREEN CONTROL
+========================================================= */
+
+function showScreen(id) {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+
+            screen.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =========================================================
+   MISSION → CONFIG
+========================================================= */
+
+function goConfig() {
+
+    loadRandomConfig();
+
+    showScreen("configScreen");
+
+}
+
+
+/* =========================================================
+   LOAD RANDOM CONFIG
+========================================================= */
+
+function loadRandomConfig() {
+
+    config =
+        generateRandomConfig();
+
+
+    document.getElementById("payload").value =
+        config.payload;
+
+
+    document.getElementById("stages").value =
+        config.stages;
+
+
+    document.getElementById("fuel").value =
+        config.fuel;
+
+
+    document.getElementById("engine").value =
+        config.engine;
+
+
+    document.getElementById("guidance").value =
+        config.guidance;
+
+
+    document.getElementById("structure").value =
+        config.structure;
+
+
+    updateConfig();
+
+}
+
+
+/* =========================================================
+   UPDATE CONFIG
+========================================================= */
+
+function updateConfig() {
+
+    config.payload =
+        Number(
+            document
+                .getElementById("payload")
+                .value
+        );
+
+
+    config.stages =
+        Number(
+            document
+                .getElementById("stages")
+                .value
+        );
+
+
+    config.fuel =
+        Number(
+            document
+                .getElementById("fuel")
+                .value
+        );
+
+
+    config.engine =
+        document
+            .getElementById("engine")
+            .value;
+
+
+    config.guidance =
+        document
+            .getElementById("guidance")
+            .value;
+
+
+    config.structure =
+        document
+            .getElementById("structure")
+            .value;
+
+
+    document
+        .getElementById("payloadValue")
+        .textContent =
+        config.payload.toLocaleString()
+        + " kg";
+
+
+    document
+        .getElementById("stagesValue")
+        .textContent =
+        config.stages;
+
+
+    document
+        .getElementById("fuelValue")
+        .textContent =
+        config.fuel.toLocaleString()
+        + " kg";
+
+}
+
+
+/* =========================================================
+   ACTIVE ROCKET SLOTS
+========================================================= */
+
+function getSlots() {
+
+    let slots = [
+
+        "nose"
+
+    ];
+
+
+    if(config.stages >= 3) {
+
+        slots.push("third");
+
+    }
+
+
+    if(config.stages >= 2) {
+
+        slots.push("second");
+
+    }
+
+
+    slots.push(
+
+        "first",
+
+        "fuel",
+
+        "guidance",
+
+        "structure",
+
+        "engine",
+
+        "nozzle"
+
+    );
+
+
+    return slots;
+
+}
+
+
+/* =========================================================
+   PART SHAPE
+========================================================= */
+
+function getShape(part) {
+
+    const map = {
+
+        nose:
+            "shape-nose",
+
+        third:
+            "shape-stage",
+
+        second:
+            "shape-stage",
+
+        first:
+            "shape-stage",
+
+        fuel:
+            "shape-fuel",
+
+        guidance:
+            "shape-guidance",
+
+        structure:
+            "shape-structure",
+
+        engine:
+            "shape-engine",
+
+        nozzle:
+            "shape-nozzle"
+
+    };
+
+
+    return map[part];
+
+}
+
+
+/* =========================================================
+   PART NAME
+========================================================= */
+
+function partName(part) {
+
+    const names = {
+
+        nose:
+            "NOSE",
+
+        third:
+            "3RD STAGE",
+
+        second:
+            "2ND STAGE",
+
+        first:
+            "1ST STAGE",
+
+        fuel:
+            "FUEL",
+
+        guidance:
+            "GUIDANCE",
+
+        structure:
+            "STRUCTURE",
+
+        engine:
+            "ENGINE B",
+
+        nozzle:
+            "NOZZLE"
+
+    };
+
+
+    return names[part];
+
+}
+
+
+/* =========================================================
+   START BUILD
+========================================================= */
+
+function startBuild() {
+
+    assembly = {};
+
+    selectedPart = null;
+
+
+    createRocket();
+
+    createPartTray();
+
+    updateTelemetry();
+
+
+    showScreen("buildScreen");
+
+}
+
+
+/* =========================================================
+   CREATE ROCKET
+========================================================= */
+
+function createRocket() {
+
+    const rocket =
+        document
+            .getElementById(
+                "rocketBuilder"
+            );
+
+
+    rocket.innerHTML = "";
+
+
+    const slots =
+        getSlots();
+
+
+    slots.forEach(slot => {
+
+        const wrapper =
+            document.createElement("div");
+
+
+        wrapper.style.position =
+            "relative";
+
+
+        if(assembly[slot]) {
+
+            const part =
+                document.createElement("div");
+
+
+            part.className =
+                "part " +
+                getShape(slot) +
+                " placed";
+
+
+            part.dataset.part =
+                slot;
+
+
+            part.innerHTML =
+                `<span class="part-label">
+                    ${partName(slot)}
+                </span>`;
+
+
+            if(slot === "first") {
+
+                const left =
+                    document.createElement(
+                        "div"
+                    );
+
+                left.className =
+                    "fin-left";
+
+                part.appendChild(left);
+
+
+                const right =
+                    document.createElement(
+                        "div"
+                    );
+
+                right.className =
+                    "fin-right";
+
+                part.appendChild(right);
+
+            }
+
+
+            part.onclick =
+                function() {
+
+                    selectedPart =
+                        slot;
+
+                    highlightSelectedSlot();
+
+                };
+
+
+            wrapper.appendChild(part);
+
+        }
+
+        else {
+
+            const empty =
+                document.createElement(
+                    "div"
+                );
+
+
+            empty.className =
+                "empty-slot";
+
+
+            empty.textContent =
+                partName(slot);
+
+
+            empty.onclick =
+                function() {
+
+                    if(selectedPart) {
+
+                        placeSelectedPart(
+                            slot
+                        );
+
+                    }
+
+                };
+
+
+            wrapper.appendChild(empty);
+
+        }
+
+
+        rocket.appendChild(wrapper);
+
+    });
+
+
+    highlightSelectedSlot();
+
+}
+
+
+/* =========================================================
+   CREATE PART TRAY
+========================================================= */
+
+function createPartTray() {
+
+    const tray =
+        document
+            .getElementById(
+                "partTray"
+            );
+
+
+    tray.innerHTML = "";
+
+
+    const parts = [
+
+        "nose",
+
+        "third",
+
+        "second",
+
+        "first",
+
+        "fuel",
+
+        "guidance",
+
+        "structure",
+
+        "engine",
+
+        "nozzle"
+
+    ];
+
+
+    parts.forEach(part => {
+
+        if(
+            part === "third" &&
+            config.stages < 3
+        ) {
+
+            return;
+
+        }
+
+
+        if(
+            part === "second" &&
+            config.stages < 2
+        ) {
+
+            return;
+
+        }
+
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "part-card";
+
+
+        card.dataset.part =
+            part;
+
+
+        if(assembly[part]) {
+
+            card.classList.add(
+                "selected"
+            );
+
+        }
+
+
+        const mini =
+            document.createElement(
+                "div"
+            );
+
+
+        mini.className =
+            "part mini-part " +
+            getShape(part);
+
+
+        mini.innerHTML =
+            `<span class="part-label">
+                ${partName(part)}
+            </span>`;
+
+
+        card.appendChild(mini);
+
+
+        const name =
+            document.createElement(
+                "div"
+            );
+
+
+        name.className =
+            "part-card-name";
+
+
+        name.textContent =
+            partName(part);
+
+
+        card.appendChild(name);
+
+
+        card.onclick =
+            function() {
+
+                selectPart(part);
+
+            };
+
+
+        tray.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   SELECT PART
+========================================================= */
+
+function selectPart(part) {
+
+    /*
+       If already placed,
+       tapping it removes it.
+    */
+
+    if(assembly[part]) {
+
+        delete assembly[part];
+
+        selectedPart = null;
+
+
+        createRocket();
+
+        createPartTray();
+
+        updateTelemetry();
+
+
+        return;
+
+    }
+
+
+    selectedPart =
+        part;
+
+
+    highlightSelectedSlot();
+
+}
+
+
+/* =========================================================
+   PLACE PART
+========================================================= */
+
+function placeSelectedPart(slot) {
+
+    if(!selectedPart) {
+
+        return;
+
+    }
+
+
+    if(assembly[slot]) {
+
+        return;
+
+    }
+
+
+    /*
+       Wrong component
+    */
+
+    if(selectedPart !== slot) {
+
+        selectedPart = null;
+
+
+        updateStatus(
+            "danger",
+            "❌ Wrong component for this slot."
+        );
+
+
+        highlightSelectedSlot();
+
+
+        return;
+
+    }
+
+
+    assembly[slot] =
+        true;
+
+
+    selectedPart =
+        null;
+
+
+    createRocket();
+
+    createPartTray();
+
+    updateTelemetry();
+
+}
+
+
+/* =========================================================
+   HIGHLIGHT CORRECT SLOT
+========================================================= */
+
+function highlightSelectedSlot() {
+
+    document
+        .querySelectorAll(
+            ".empty-slot"
+        )
+        .forEach(slot => {
+
+            slot.classList.remove(
+                "selected-slot"
+            );
+
+        });
+
+
+    if(!selectedPart) {
+
+        return;
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".empty-slot"
+        )
+        .forEach(slot => {
+
+            if(
+                slot.textContent ===
+                partName(selectedPart)
+            ) {
+
+                slot.classList.add(
+                    "selected-slot"
+                );
+
+            }
+
+        });
+
+}
+
+
+/* =========================================================
+   RESET ASSEMBLY
+========================================================= */
+
+function resetAssembly() {
+
+    assembly = {};
+
+    selectedPart = null;
+
+
+    createRocket();
+
+    createPartTray();
+
+    updateTelemetry();
+
+}
+
+
+/* =========================================================
+   CALCULATE PERFORMANCE
+========================================================= */
+
+function calculate() {
+
+    let mass =
+        config.payload;
+
+
+    mass +=
+        config.fuel;
+
+
+    mass +=
+        ENGINES[
+            config.engine
+        ].mass;
+
+
+    mass +=
+        GUIDANCE[
+            config.guidance
+        ];
+
+
+    mass +=
+        STRUCTURE[
+            config.structure
+        ];
+
+
+    /*
+       Physical components
+    */
+
+    if(assembly.nose) {
+
+        mass += PART_MASS.nose;
+
+    }
+
+
+    if(assembly.first) {
+
+        mass += PART_MASS.first;
+
+    }
+
+
+    if(assembly.second) {
+
+        mass += PART_MASS.second;
+
+    }
+
+
+    if(assembly.third) {
+
+        mass += PART_MASS.third;
+
+    }
+
+
+    if(assembly.nozzle) {
+
+        mass += PART_MASS.nozzle;
+
+    }
+
+
+    /*
+       Thrust
+    */
+
+    let thrust = 0;
+
+
+    if(assembly.engine) {
+
+        thrust =
+            ENGINES[
+                config.engine
+            ].thrust;
+
+    }
+
+
+    /*
+       T/W
+    */
+
+    const weight =
+        mass * 9.81 / 1000;
+
+
+    const tw =
+        weight > 0
+        ? thrust / weight
+        : 0;
+
+
+    /*
+       DELTA V
+    */
+
+    let dv = 0;
+
+
+    if(
+        assembly.engine &&
+        assembly.fuel &&
+        config.fuel > 0
+    ) {
+
+        const isp =
+            ENGINES[
+                config.engine
+            ].isp;
+
+
+        const dryMass =
+            mass - config.fuel;
+
+
+        if(dryMass > 0) {
+
+            const rawDV =
+                isp *
+                9.81 *
+                Math.log(
+                    mass / dryMass
+                ) / 1000;
+
+
+            let stagingFactor = 1;
+
+
+            if(config.stages === 2) {
+
+                stagingFactor =
+                    1.05;
+
+            }
+
+
+            if(config.stages === 3) {
+
+                stagingFactor =
+                    1.18;
+
+            }
+
+
+            dv =
+                rawDV *
+                stagingFactor;
+
+        }
+
+    }
+
+
+    /*
+       Assembly percentage
+    */
+
+    const slots =
+        getSlots();
+
+
+    const placed =
+        slots.filter(
+            slot => assembly[slot]
+        ).length;
+
+
+    const completion =
+        Math.round(
+            placed /
+            slots.length *
+            100
+        );
+
+
+    return {
+
+        mass,
+        thrust,
+        tw,
+        dv,
+        completion
+
+    };
+
+}
+
+
+/* =========================================================
+   TELEMETRY
+========================================================= */
 
 function updateTelemetry() {
-    const metrics = calculateMetrics();
 
-    document.getElementById("massMetric").textContent = metrics.mass.toLocaleString() + " kg";
-    document.getElementById("thrustMetric").textContent = metrics.thrust + " kN";
-    document.getElementById("twMetric").textContent = metrics.twRatio.toFixed(2);
-    document.getElementById("dvMetric").textContent = metrics.dv.toFixed(2) + " km/s";
-    document.getElementById("stabilityMetric").textContent = metrics.stability + "%";
+    const m =
+        calculate();
 
-    document.getElementById("massBar").style.width = Math.min(100, (metrics.mass / mission.maxMass) * 100) + "%";
-    document.getElementById("thrustBar").style.width = Math.min(100, (metrics.thrust / 1200) * 100) + "%";
-    document.getElementById("twBar").style.width = Math.min(100, (metrics.twRatio / 2.5) * 100) + "%";
-    document.getElementById("dvBar").style.width = Math.min(100, (metrics.dv / 8) * 100) + "%";
-    document.getElementById("stabilityBar").style.width = metrics.stability + "%";
 
-    const fitBox = document.getElementById("missionFit");
-    const testBtn = document.getElementById("testButton");
+    document
+        .getElementById(
+            "massValue"
+        )
+        .textContent =
+        m.mass.toLocaleString()
+        + " kg";
 
-    if (!metrics.isFullyAssembled) {
-        fitBox.className = "status-box warn";
-        fitBox.innerHTML = `<b>INCOMPLETE</b><br>Tap parts & slots to assemble.`;
-        testBtn.disabled = true;
-    } else if (!metrics.isCorrectArrangement) {
-        fitBox.className = "status-box warn";
-        fitBox.innerHTML = `⚠️ <b>MISARRANGED!</b><br>Components out of order!`;
-        testBtn.disabled = true;
-    } else if (metrics.mass > mission.maxMass) {
-        fitBox.className = "status-box warn";
-        fitBox.innerHTML = `<b>OVERWEIGHT</b><br>Mass > limit.`;
-        testBtn.disabled = false;
-    } else if (metrics.twRatio < mission.minTW) {
-        fitBox.className = "status-box warn";
-        fitBox.innerHTML = `<b>LOW THRUST</b><br>T/W ratio low.`;
-        testBtn.disabled = false;
-    } else if (metrics.dv < mission.minDV) {
-        fitBox.className = "status-box warn";
-        fitBox.innerHTML = `<b>LOW Δv</b><br>Delta-v low.`;
-        testBtn.disabled = false;
-    } else {
-        fitBox.className = "status-box good";
-        fitBox.innerHTML = `✨ <b>READY!</b><br>All telemetry optimal!`;
-        testBtn.disabled = false;
+
+    document
+        .getElementById(
+            "twValue"
+        )
+        .textContent =
+        m.tw.toFixed(2);
+
+
+    document
+        .getElementById(
+            "dvValue"
+        )
+        .textContent =
+        m.dv.toFixed(2);
+
+
+    /*
+       STATUS
+    */
+
+    if(m.mass > MISSION.maxMass) {
+
+        updateStatus(
+            "danger",
+            "⚠️ MASS LIMIT EXCEEDED — Maximum 90,000 kg"
+        );
+
+        return;
+
     }
-}
 
-function testRocket() {
-    showScreen("launchScreen");
 
-    const statusElem = document.getElementById("launchStatus");
-    const countElem = document.getElementById("countNumber");
-    const launchRocketElem = document.getElementById("launchRocket");
-    const launchFlameElem = document.getElementById("launchFlame");
-    const fullVisualContainer = document.getElementById("fullRocketVisual");
+    if(m.tw < MISSION.minTW) {
 
-    fullVisualContainer.style.width = "80px";
-    fullVisualContainer.style.display = "flex";
-    fullVisualContainer.style.flexDirection = "column";
-    
-    let html = `<div style="height:32px;">${rocketSVGParts.nose}</div>`;
-    if (configuration.stages >= 3) html += `<div style="height:26px;">${rocketSVGParts.third}</div>`;
-    if (configuration.stages >= 2) html += `<div style="height:28px;">${rocketSVGParts.second}</div>`;
-    html += `<div style="height:32px;">${rocketSVGParts.first}</div>`;
-    html += `<div style="height:26px;">${rocketSVGParts.fuel}</div>`;
-    html += `<div style="height:22px;">${rocketSVGParts.guidance}</div>`;
-    html += `<div style="height:22px;">${rocketSVGParts.structure}</div>`;
-    html += `<div style="height:24px;">${rocketSVGParts.engine}</div>`;
-    html += `<div style="height:24px;">${rocketSVGParts.nozzle}</div>`;
-    fullVisualContainer.innerHTML = html;
+        updateStatus(
+            "danger",
+            "⚠️ LOW T/W — Required ≥ 1.20"
+        );
 
-    launchRocketElem.classList.remove("fly");
-    launchFlameElem.classList.remove("active");
+        return;
 
-    statusElem.textContent = "CHECKING SYSTEMS...";
-    let count = 3;
-    countElem.textContent = count;
-
-    const timer = setInterval(() => {
-        count--;
-        if (count > 0) {
-            countElem.textContent = count;
-        } else if (count === 0) {
-            countElem.textContent = "🚀";
-            statusElem.textContent = "LIFT OFF!";
-            launchFlameElem.classList.add("active");
-            launchRocketElem.classList.add("fly");
-        } else {
-            clearInterval(timer);
-            setTimeout(() => { evaluateMissionResult(); }, 2000);
-        }
-    }, 1000);
-}
-
-function evaluateMissionResult() {
-    showScreen("resultScreen");
-
-    const metrics = calculateMetrics();
-    let failures = [];
-
-    if (metrics.mass > mission.maxMass) failures.push("Exceeds max weight (70k kg).");
-    if (metrics.twRatio < mission.minTW) failures.push("T/W ratio too low.");
-    if (metrics.dv < mission.minDV) failures.push("Delta-v insufficient for orbit.");
-    if (configuration.guidance !== mission.requiredGuidance) failures.push("Guidance system inadequate.");
-    if (configuration.structure === "heavy") failures.push("Excess structural drag.");
-
-    const iconElem = document.getElementById("resultIcon");
-    const titleElem = document.getElementById("resultTitle");
-    const textElem = document.getElementById("resultText");
-    const listElem = document.getElementById("failureList");
-
-    if (failures.length === 0) {
-        iconElem.textContent = "🎉";
-        titleElem.textContent = "SUCCESS!";
-        titleElem.style.color = "#50e3a4";
-        textElem.textContent = "Target orbit reached successfully!";
-        listElem.innerHTML = "";
-    } else {
-        iconElem.textContent = "💥";
-        titleElem.textContent = "FAILED";
-        titleElem.style.color = "#ff6b8a";
-        textElem.textContent = "Mission aborted due to errors:";
-
-        let html = "<ul style='padding-left:15px;'>";
-        failures.forEach(f => { html += `<li>${f}</li>`; });
-        html += "</ul>";
-        listElem.innerHTML = html;
     }
+
+
+    if(m.dv < MISSION.minDV) {
+
+        updateStatus(
+            "danger",
+            "⚠️ LOW Δv — Required ≥ 4.00 km/s"
+        );
+
+        return;
+
+    }
+
+
+    if(m.completion < 100) {
+
+        updateStatus(
+            "warning",
+            "🔧 Assembly " +
+            m.completion +
+            "% complete"
+        );
+
+        return;
+
+    }
+
+
+    updateStatus(
+        "ready",
+        "✅ FLIGHT PARAMETERS READY"
+    );
+
 }
 
-function restartMission() { showMission(); }
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function updateStatus(
+    type,
+    text
+) {
+
+    const status =
+        document
+            .getElementById(
+                "status"
+            );
+
+
+    status.className =
+        "status " + type;
+
+
+    status.textContent =
+        text;
+
+}
+
+
+/* =========================================================
+   CHECK CONFIGURATION
+========================================================= */
+
+function configurationErrors() {
+
+    const errors = [];
+
+
+    if(config.payload !== 500) {
+
+        errors.push(
+            "Payload must be exactly 500 kg."
+        );
+
+    }
+
+
+    if(config.stages !== 3) {
+
+        errors.push(
+            "Exactly 3 stages are required."
+        );
+
+    }
+
+
+    if(config.fuel !== 50000) {
+
+        errors.push(
+            "Fuel must be exactly 50,000 kg."
+        );
+
+    }
+
+
+    if(config.engine !== "B") {
+
+        errors.push(
+            "Engine B is required."
+        );
+
+    }
+
+
+    if(config.guidance !== "advanced") {
+
+        errors.push(
+            "Advanced guidance is required."
+        );
+
+    }
+
+
+    if(config.structure !== "standard") {
+
+        errors.push(
+            "Standard structure is required."
+        );
+
+    }
+
+
+    return errors;
+
+}
+
+
+/* =========================================================
+   LAUNCH
+========================================================= */
+
+function launch() {
+
+    const errors =
+        configurationErrors();
+
+
+    const m =
+        calculate();
+
+
+    const slots =
+        getSlots();
+
+
+    const incomplete =
+        slots.filter(
+            x => !assembly[x]
+        );
+
+
+    if(errors.length > 0) {
+
+        showFailure(
+            errors,
+            m
+        );
+
+        return;
+
+    }
+
+
+    if(incomplete.length > 0) {
+
+        showFailure(
+            [
+                "Rocket assembly is incomplete."
+            ],
+            m
+        );
+
+        return;
+
+    }
+
+
+    if(m.mass > MISSION.maxMass) {
+
+        showFailure(
+            [
+                "Rocket mass exceeds 90,000 kg."
+            ],
+            m
+        );
+
+        return;
+
+    }
+
+
+    if(m.tw < MISSION.minTW) {
+
+        showFailure(
+            [
+                "T/W ratio is below 1.20."
+            ],
+            m
+        );
+
+        return;
+
+    }
+
+
+    if(m.dv < MISSION.minDV) {
+
+        showFailure(
+            [
+                "Δv is below 4.00 km/s."
+            ],
+            m
+        );
+
+        return;
+
+    }
+
+
+    showScreen(
+        "launchScreen"
+    );
+
+
+    countdown();
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+function countdown() {
+
+    let number = 5;
+
+
+    const display =
+        document
+            .getElementById(
+                "countdown"
+            );
+
+
+    const text =
+        document
+            .getElementById(
+                "launchText"
+            );
+
+
+    display.textContent =
+        number;
+
+
+    const timer =
+        setInterval(
+            () => {
+
+                number--;
+
+
+                if(number > 0) {
+
+                    display.textContent =
+                        number;
+
+                }
+
+                else {
+
+                    clearInterval(timer);
+
+
+                    display.textContent =
+                        "🚀";
+
+
+                    text.textContent =
+                        "LIFTOFF! Mission successful!";
+
+
+                    setTimeout(
+                        () => {
+
+                            showSuccess();
+
+                        },
+                        1500
+                    );
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+function showSuccess() {
+
+    const m =
+        calculate();
+
+
+    document
+        .getElementById(
+            "resultIcon"
+        )
+        .textContent =
+        "🎉";
+
+
+    document
+        .getElementById(
+            "resultTitle"
+        )
+        .textContent =
+        "MISSION SUCCESS";
+
+
+    document
+        .getElementById(
+            "resultMessage"
+        )
+        .textContent =
+        "Excellent! Your rocket satisfies all mission requirements and is ready for LEO.";
+
+
+    document
+        .getElementById(
+            "rPayload"
+        )
+        .textContent =
+        config.payload +
+        " kg";
+
+
+    document
+        .getElementById(
+            "rMass"
+        )
+        .textContent =
+        m.mass.toLocaleString() +
+        " kg";
+
+
+    document
+        .getElementById(
+            "rTW"
+        )
+        .textContent =
+        m.tw.toFixed(2);
+
+
+    document
+        .getElementById(
+            "rDV"
+        )
+        .textContent =
+        m.dv.toFixed(2) +
+        " km/s";
+
+
+    document
+        .getElementById(
+            "rStages"
+        )
+        .textContent =
+        config.stages;
+
+
+    document
+        .getElementById(
+            "rStatus"
+        )
+        .textContent =
+        "SUCCESS";
+
+
+    document
+        .getElementById(
+            "rStatus"
+        )
+        .style.color =
+        "#5cf0c5";
+
+
+    document
+        .getElementById(
+            "failures"
+        )
+        .style.display =
+        "none";
+
+
+    showScreen(
+        "resultScreen"
+    );
+
+}
+
+
+/* =========================================================
+   FAILURE
+========================================================= */
+
+function showFailure(
+    errors,
+    m
+) {
+
+    document
+        .getElementById(
+            "resultIcon"
+        )
+        .textContent =
+        "❌";
+
+
+    document
+        .getElementById(
+            "resultTitle"
+        )
+        .textContent =
+        "MISSION FAILED";
+
+
+    document
+        .getElementById(
+            "resultMessage"
+        )
+        .textContent =
+        "The rocket does not satisfy all mission requirements.";
+
+
+    document
+        .getElementById(
+            "rPayload"
+        )
+        .textContent =
+        config.payload +
+        " kg";
+
+
+    document
+        .getElementById(
+            "rMass"
+        )
+        .textContent =
+        m.mass.toLocaleString() +
+        " kg";
+
+
+    document
+        .getElementById(
+            "rTW"
+        )
+        .textContent =
+        m.tw.toFixed(2);
+
+
+    document
+        .getElementById(
+            "rDV"
+        )
+        .textContent =
+        m.dv.toFixed(2) +
+        " km/s";
+
+
+    document
+        .getElementById(
+            "rStages"
+        )
+        .textContent =
+        config.stages;
+
+
+    document
+        .getElementById(
+            "rStatus"
+        )
+        .textContent =
+        "FAILED";
+
+
+    document
+        .getElementById(
+            "rStatus"
+        )
+        .style.color =
+        "#ff8790";
+
+
+    const box =
+        document
+            .getElementById(
+                "failures"
+            );
+
+
+    box.style.display =
+        "block";
+
+
+    box.innerHTML =
+
+        "<b>Problems detected:</b><br>" +
+
+        errors
+            .map(
+                x => "• " + x
+            )
+            .join("<br>");
+
+
+    showScreen(
+        "resultScreen"
+    );
+
+}
+
+
+/* =========================================================
+   RESTART WITH RANDOM CONFIG
+========================================================= */
+
+function restart() {
+
+    /*
+       Generate a completely new
+       random configuration.
+    */
+
+    loadRandomConfig();
+
+
+    assembly = {};
+
+    selectedPart = null;
+
+
+    showScreen(
+        "configScreen"
+    );
+
+}
+
+
+/* =========================================================
+   INITIAL RANDOM CONFIG
+========================================================= */
+
+loadRandomConfig();
+
 </script>
 
 </body>
